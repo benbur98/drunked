@@ -15,6 +15,10 @@ captures/
 *.apk
 output.json
 
+# IDE
+.fleet
+.vscode
+
 # IntelliJ
 *.iml
 .idea/
@@ -26,8 +30,17 @@ render.experimental.xml
 *.jks
 *.keystore
 
-# Google Services (e.g. APIs or Firebase)
-google-services.json
-
 # Android Profiling
 *.hprof
+
+# IOS
+.DS_Store
+
+# XCode
+xcuserdata
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcodeproj/project.xcworkspace/
+!*.xcworkspace/contents.xcworkspacedata
+**/xcshareddata/WorkspaceSettings.xcsettings
