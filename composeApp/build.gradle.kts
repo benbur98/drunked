@@ -1,9 +1,8 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.sqlDelight)
 }
 
 kotlin {
@@ -14,7 +13,7 @@ kotlin {
             }
         }
     }
-    
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -25,13 +24,9 @@ kotlin {
             isStatic = true
         }
     }
-    
+
     sourceSets {
-        
-        androidMain.dependencies {
-            implementation(libs.compose.ui.tooling.preview)
-            implementation(libs.androidx.activity.compose)
-        }
+
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -40,6 +35,14 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
             implementation(libs.kotlinx.datetime)
+        }
+        androidMain.dependencies {
+            implementation(libs.compose.ui.tooling.preview)
+            implementation(libs.androidx.activity.compose)
+            implementation(libs.sqlDelight.android.driver)
+        }
+        iosMain.dependencies {
+            implementation(libs.sqlDelight.native.driver)
         }
     }
 
@@ -79,7 +82,15 @@ android {
         debugImplementation(libs.compose.ui.tooling)
     }
 }
+
 dependencies {
     implementation(libs.androidx.material3.android)
 }
 
+sqldelight {
+    databases {
+        create("DrunkedDatabase") {
+            packageName.set("com.drunked.drunked.db")
+        }
+    }
+}
