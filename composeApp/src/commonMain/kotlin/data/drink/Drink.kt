@@ -1,7 +1,5 @@
 package data.drink
 
-import utils.unitsFromAbvAndVolume
-
 
 typealias Units = Float
 
@@ -26,8 +24,6 @@ data class Drink(
     val name: String,
     val abv: Abv,
     val volume: Volume,
-) {
     val units: Units
-        get() = unitsFromAbvAndVolume(abv, volume)
-}
+)
 

@@ -12,9 +12,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import data.drink.toAbv
-import data.drink.toUnits
-import data.drink.toVolume
+import data.drink.Abv
+import data.drink.Units
+import data.drink.Volume
 import ui.components.drink.AbvInput
 import ui.components.drink.UnitsInput
 import ui.components.drink.VolumeInput
@@ -24,20 +24,16 @@ import utils.unitsFromAbvAndVolume
 
 @Composable
 fun UnitCalculator() {
-    var units: String by remember { mutableStateOf("") }
-    var abv: String by remember { mutableStateOf("") }
-    var volume: String by remember { mutableStateOf("") }
+    var units: Units by remember { mutableStateOf(0f) }
+    var abv: Abv by remember { mutableStateOf(0f) }
+    var volume: Volume by remember { mutableStateOf(0) }
 
     fun recalculateUnits() {
-        val abvFloat = abv.toAbv()
-        val volumeInt = volume.toVolume()
-        units = unitsFromAbvAndVolume(abvFloat, volumeInt).toString()
+        units = unitsFromAbvAndVolume(abv, volume)
     }
 
     fun recalculateAbv() {
-        val unitsFloat = units.toUnits()
-        val volumeFloat = volume.toVolume()
-        abv = abvFromUnitsAndVolume(unitsFloat, volumeFloat).toString()
+        abv = abvFromUnitsAndVolume(units, volume)
     }
 
     Card(
@@ -46,16 +42,16 @@ fun UnitCalculator() {
             .border(2.dp, Color.Gray)
     ) {
         Column {
-            AbvInput(abv = abv.toAbv()) {
-                abv = it.toString()
+            AbvInput(abv = abv) {
+                abv = it
                 recalculateUnits()
             }
-            VolumeInput(volume = volume.toVolume()) {
-                volume = it.toString()
+            VolumeInput(volume = volume) {
+                volume = it
                 recalculateUnits()
             }
-            UnitsInput(units = units.toUnits()) {
-                units = it.toString()
+            UnitsInput(units = units) {
+                units = it
                 recalculateAbv()
             }
         }

@@ -6,6 +6,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import ui.components.Logo
+import ui.components.NewDrinkForm
 import ui.components.UnitCalculator
 import utils.currentTime
 
@@ -19,6 +20,10 @@ fun App() {
             Logo()
 
             UnitCalculator()
+
+            NewDrinkForm { drink ->
+                println(drink)
+            }
         }
     }
 }
