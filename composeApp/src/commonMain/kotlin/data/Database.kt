@@ -2,7 +2,8 @@ package data
 
 import app.cash.sqldelight.db.SqlDriver
 import com.drunked.drunked.database.DrunkedDatabase
-import data.drink.DrinkDataSource
+import data.drink.datasources.DrinkDataSource
+import data.drink.datasources.DrinkEventDataSource
 
 
 const val DATABASE_NAME = "drunked.db"
@@ -18,6 +19,7 @@ fun createDatabase(driverFactory: DatabaseDriverFactory): DrunkedDatabase {
 
     return DrunkedDatabase(
         driver,
-        DrinkAdapter = DrinkDataSource.drinkAdapter
+        DrinkAdapter = DrinkDataSource.drinkAdapter,
+        DrinkEventAdapter = DrinkEventDataSource.drinkEventAdapter
     )
 }

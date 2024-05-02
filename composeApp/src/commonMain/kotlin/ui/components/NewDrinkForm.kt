@@ -18,19 +18,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import data.drink.Abv
 import data.drink.Drink
-import data.drink.Units
-import data.drink.Volume
+import data.drink.DrinkType
 import ui.components.drink.AbvInput
-import ui.components.drink.UnitsInput
-import ui.components.drink.VolumeInput
+import ui.components.drink.DrinkTypeSelect
 
 
 @Composable
 fun NewDrinkForm(onDrinkAdded: (Drink) -> Unit) {
     var name: String by remember { mutableStateOf("") }
-    var units: Units by remember { mutableStateOf(0f) }
     var abv: Abv by remember { mutableStateOf(0f) }
-    var volume: Volume by remember { mutableStateOf(0) }
+    var drinkType: DrinkType? by remember { mutableStateOf(null) }
 
     Card(
         modifier = Modifier
@@ -45,8 +42,7 @@ fun NewDrinkForm(onDrinkAdded: (Drink) -> Unit) {
                     label = { Text("Name") }
                 )
                 AbvInput(abv = abv) { abv = it }
-                VolumeInput(volume = volume) { volume = it }
-                UnitsInput(units = units) { units = it }
+                DrinkTypeSelect { drinkType = it }
             }
             Button(
                 onClick = {
@@ -54,8 +50,7 @@ fun NewDrinkForm(onDrinkAdded: (Drink) -> Unit) {
                         Drink(
                             name = name,
                             abv = abv,
-                            volume = volume,
-                            units = units
+                            type = drinkType ?: DrinkType.UNKNOWN
                         )
                     )
                 }) {
