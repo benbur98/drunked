@@ -16,13 +16,12 @@ fun Abv.toPercentageString(): String = "${this}%"
 
 fun String.toUnits(): Units = this.toFloatOrNull() ?: 0.0f
 
-fun String.toAbv(): Abv = this.toFloatOrNull() ?: 0.0f
+fun String.toAbv(): Abv = this.toFloatOrNull()?.coerceIn(0f, 100f) ?: 0.0f
 
 fun String.toVolume(): Volume = this.toIntOrNull() ?: 0
 
 
 data class Drink(
-    val id: Int,
     val timestamp: String,
     val name: String,
     val abv: Abv,

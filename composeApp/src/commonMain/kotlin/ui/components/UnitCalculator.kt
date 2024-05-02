@@ -2,14 +2,8 @@ package ui.components
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Card
-import androidx.compose.material.Chip
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -17,17 +11,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import data.drink.DrinkMeasure
 import data.drink.toAbv
 import data.drink.toUnits
 import data.drink.toVolume
+import ui.components.drink.AbvInput
+import ui.components.drink.UnitsInput
+import ui.components.drink.VolumeInput
 import utils.abvFromUnitsAndVolume
 import utils.unitsFromAbvAndVolume
 
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun UnitCalculator() {
     var units: String by remember { mutableStateOf("") }
@@ -52,51 +46,18 @@ fun UnitCalculator() {
             .border(2.dp, Color.Gray)
     ) {
         Column {
-            TextField(
-                value = abv,
-                onValueChange = { newValue ->
-                    val abvFloat = newValue.toAbv()
-                    abv = if (abvFloat > 100) "100" else abvFloat.toString()
-                    recalculateUnits()
-                },
-                label = { Text("Alcohol Percentage") },
-                trailingIcon = { Text("%") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-            )
-            Row {
-                Column {
-                    Row {
-                        DrinkMeasure.entries.forEach {
-                            Chip(
-                                onClick = {
-                                    volume = it.volume.toString()
-                                    recalculateUnits()
-                                },
-                                content = { Text(it.text) }
-                            )
-                        }
-                    }
-                    TextField(
-                        value = volume,
-                        onValueChange = { newValue ->
-                            volume = newValue.toVolume().toString()
-                            recalculateUnits()
-                        },
-                        label = { Text("Volume") },
-                        trailingIcon = { Text("ml") },
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-                    )
-                }
+            AbvInput(abv = abv.toAbv()) {
+                abv = it.toString()
+                recalculateUnits()
             }
-            TextField(
-                value = units,
-                onValueChange = { newValue ->
-                    units = newValue.toUnits().toString()
-                    recalculateAbv()
-                },
-                label = { Text("Alcohol Units") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-            )
+            VolumeInput(volume = volume.toVolume()) {
+                volume = it.toString()
+                recalculateUnits()
+            }
+            UnitsInput(units = units.toUnits()) {
+                units = it.toString()
+                recalculateAbv()
+            }
         }
     }
 }
