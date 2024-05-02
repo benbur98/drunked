@@ -8,7 +8,7 @@ CREATE TABLE Drink (
     abv REAL AS Float NOT NULL,
     volume INTEGER AS Int NOT NULL,
     units REAL AS Float NOT NULL,
-    type TEXT AS DrinkType
+    type TEXT AS DrinkType NOT NULL
 );
 
 selectAll:

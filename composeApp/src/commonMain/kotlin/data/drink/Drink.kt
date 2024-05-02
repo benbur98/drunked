@@ -24,7 +24,7 @@ data class Drink(
     val abv: Abv,
     val volume: Volume,
     val units: Units,
-    val type: DrinkType? = null
+    val type: DrinkType = DrinkType.UNKNOWN
 )
 
 
@@ -34,4 +34,5 @@ enum class DrinkType {
     WINE,
     SPIRIT,
     COCKTAIL,
+    UNKNOWN
 }
