@@ -55,7 +55,8 @@ fun UnitCalculator() {
             TextField(
                 value = abv,
                 onValueChange = { newValue ->
-                    abv = newValue.toAbv().toString()
+                    val abvFloat = newValue.toAbv()
+                    abv = if (abvFloat > 100) "100" else abvFloat.toString()
                     recalculateUnits()
                 },
                 label = { Text("Alcohol Percentage") },

@@ -5,7 +5,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import ui.components.DrinkFloatingButton
 import ui.components.Logo
 import ui.components.UnitCalculator
 
@@ -18,8 +17,6 @@ fun App() {
             Logo()
 
             UnitCalculator()
-
-            DrinkFloatingButton {}
         }
     }
 }
