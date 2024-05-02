@@ -37,14 +37,12 @@ fun App() {
 
 val drinks = listOf(
     Drink(
-        timestamp = currentTime,
         name = "Beer",
         abv = 5f,
         volume = 330,
         units = 1f
     ),
     Drink(
-        timestamp = currentTime,
         name = "Wine",
         abv = 12f,
         volume = 175,

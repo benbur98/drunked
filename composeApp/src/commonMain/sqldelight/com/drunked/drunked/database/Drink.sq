@@ -1,0 +1,18 @@
+import data.drink.DrinkType;
+import kotlin.Int;
+import kotlin.Float;
+
+
+CREATE TABLE Drink (
+    name TEXT NOT NULL,
+    abv REAL AS Float NOT NULL,
+    volume INTEGER AS Int NOT NULL,
+    units REAL AS Float NOT NULL,
+    type TEXT AS DrinkType
+);
+
+selectAll:
+SELECT * FROM Drink;
+
+insert:
+INSERT INTO Drink(name, abv, volume, units, type) VALUES (?, ?, ?, ?, ?);

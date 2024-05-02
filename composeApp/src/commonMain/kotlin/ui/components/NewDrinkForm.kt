@@ -23,7 +23,6 @@ import data.drink.Volume
 import ui.components.drink.AbvInput
 import ui.components.drink.UnitsInput
 import ui.components.drink.VolumeInput
-import utils.currentTime
 
 
 @Composable
@@ -53,7 +52,6 @@ fun NewDrinkForm(onDrinkAdded: (Drink) -> Unit) {
                 onClick = {
                     onDrinkAdded(
                         Drink(
-                            timestamp = currentTime,
                             name = name,
                             abv = abv,
                             volume = volume,

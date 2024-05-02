@@ -33,6 +33,7 @@ compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = 
 compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
 androidx-material3-android = { group = "androidx.compose.material3", name = "material3-android", version.ref = "material3Android" }
+sqlDelight-primitive-adapters = { module = "app.cash.sqldelight:primitive-adapters", version.ref = "sqlDelight" }
 sqlDelight-android-driver = { module = "app.cash.sqldelight:android-driver", version.ref = "sqlDelight" }
 sqlDelight-native-driver = { module = "app.cash.sqldelight:native-driver", version.ref = "sqlDelight" }
 

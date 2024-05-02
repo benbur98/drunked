@@ -20,10 +20,18 @@ fun String.toVolume(): Volume = this.toIntOrNull() ?: 0
 
 
 data class Drink(
-    val timestamp: String,
     val name: String,
     val abv: Abv,
     val volume: Volume,
-    val units: Units
+    val units: Units,
+    val type: DrinkType? = null
 )
 
+
+enum class DrinkType {
+    BEER,
+    CIDER,
+    WINE,
+    SPIRIT,
+    COCKTAIL,
+}

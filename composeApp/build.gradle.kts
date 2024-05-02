@@ -35,6 +35,7 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
             implementation(libs.kotlinx.datetime)
+            implementation(libs.sqlDelight.primitive.adapters)
         }
         androidMain.dependencies {
             implementation(libs.compose.ui.tooling.preview)
@@ -90,7 +91,7 @@ dependencies {
 sqldelight {
     databases {
         create("DrunkedDatabase") {
-            packageName.set("com.drunked.drunked.db")
+            packageName.set("com.drunked.drunked.database")
         }
     }
 }
