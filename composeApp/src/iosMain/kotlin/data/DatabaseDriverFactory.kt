@@ -7,7 +7,7 @@ import com.drunked.drunked.database.DrunkedDatabase
 
 
 actual class DatabaseDriverFactory {
-    actual fun create(): SqlDriver =
+    actual fun createDriver(): SqlDriver =
         NativeSqliteDriver(
             schema = DrunkedDatabase.Schema,
             name = DATABASE_NAME,

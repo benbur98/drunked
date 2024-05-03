@@ -13,12 +13,16 @@ androidx-test-junit = "1.1.5"
 compose = "1.6.6"
 compose-plugin = "1.6.2"
 junit = "4.13.2"
+koinCore = "3.2.0"
 kotlin = "1.9.23"
 kotlinxDatetime = "0.5.0"
 material3Android = "1.2.1"
 sqlDelight = "2.0.1"
 
 [libraries]
+koin-core = { module = "io.insert-koin:koin-core", version.ref = "koinCore" }
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koinCore" }
+koin-android-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koinCore" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

@@ -8,7 +8,7 @@ import com.drunked.drunked.database.DrunkedDatabase
 
 
 actual class DatabaseDriverFactory(private val context: Context) {
-    actual fun create(): SqlDriver =
+    actual fun createDriver(): SqlDriver =
         AndroidSqliteDriver(
             schema = DrunkedDatabase.Schema,
             context = context,

@@ -10,13 +10,11 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import ui.components.Logo
 import ui.components.NewDrinkEventForm
 import ui.components.NewDrinkForm
-import utils.currentTime
 
 
 @Composable
 @Preview
 fun App() {
-    println(currentTime)
     MaterialTheme {
         Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
             Logo()

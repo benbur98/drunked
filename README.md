@@ -1,10 +1,16 @@
 # drunked
 
-## ERD
+Koin is used for Dependency Injection.
+
+## Database
+
+This app uses SQLDelight for a MultiPlatform SQLLite Database Implementation on Android/iOS.
+
+### ERD
 
 ```mermaid
 erDiagram
-    Drink ||--o{ DrinkEvent : "has"
+    Drink ||--o{ DrinkEvent: "has"
     Drink {
         int id
         string name
