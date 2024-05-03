@@ -1,5 +1,8 @@
 package data.drink
 
+import utils.currentDate
+import utils.currentTime
+
 
 enum class DrinkType(val text: String) {
     BEER("Beer"),
@@ -20,8 +23,16 @@ data class Drink(
 
 
 data class DrinkEvent(
-    val timestamp: String,
     val drink: Drink,
     val volume: Volume,
     val units: Units,
+    val session: Session,
+    val timestamp: String = currentTime,
+    val id: Int? = null
+)
+
+
+data class Session(
+    val date: String = currentDate,
+    val id: Int? = null,
 )

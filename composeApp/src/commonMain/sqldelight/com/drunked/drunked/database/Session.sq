@@ -1,0 +1,17 @@
+import kotlin.Int;
+import kotlin.Float;
+
+
+CREATE TABLE Session (
+    id INTEGER AS Int PRIMARY KEY AUTOINCREMENT,
+    date TEXT NOT NULL
+);
+
+selectById:
+SELECT * FROM Session WHERE id = ?;
+
+selectAll:
+SELECT * FROM Session;
+
+insert:
+INSERT INTO Session(date) VALUES (?);

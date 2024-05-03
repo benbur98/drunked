@@ -3,15 +3,27 @@ import kotlin.Float;
 
 
 CREATE TABLE DrinkEvent (
+    id INTEGER AS Int PRIMARY KEY AUTOINCREMENT,
     timestamp TEXT NOT NULL,
-    drink_id INTEGER AS Int NOT NULL,
     volume INTEGER AS Int NOT NULL,
     units REAL AS Float NOT NULL,
-    FOREIGN KEY(drink_id) REFERENCES Drink(id)
+    drink_id INTEGER AS Int NOT NULL,
+    session_id INTEGER AS Int NOT NULL,
+    FOREIGN KEY(drink_id) REFERENCES Drink(id),
+    FOREIGN KEY(session_id) REFERENCES Session(id)
 );
+
+selectById:
+SELECT * FROM DrinkEvent WHERE id = ?;
 
 selectAll:
 SELECT * FROM DrinkEvent;
 
+selectAllForDrink:
+SELECT * FROM DrinkEvent WHERE drink_id = ?;
+
+selectAllForSession:
+SELECT * FROM DrinkEvent WHERE session_id = ?;
+
 insert:
-INSERT INTO DrinkEvent(timestamp, drink_id, volume, units) VALUES (?, ?, ?, ?);
+INSERT INTO DrinkEvent(timestamp, volume, units, drink_id, session_id) VALUES (?, ?, ?, ?, ?);

@@ -5,6 +5,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import data.drink.Drink
 import data.drink.DrinkType
+import data.drink.Session
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import ui.components.Logo
 import ui.components.NewDrinkEventForm
@@ -22,7 +23,7 @@ fun App() = DrunkedTheme {
             println(it)
         }
 
-        NewDrinkEventForm(drinks) {
+        NewDrinkEventForm(drinks, session) {
             println(it)
         }
     }
@@ -41,3 +42,5 @@ val drinks = listOf(
         type = DrinkType.WINE
     )
 )
+
+val session = Session()

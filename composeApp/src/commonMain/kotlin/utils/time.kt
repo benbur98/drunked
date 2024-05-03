@@ -7,7 +7,10 @@ import kotlinx.datetime.toLocalDateTime
 
 
 /* Format the Timestamp to YYY-MM-DD HH:MM:SS */
-private fun LocalDateTime.format() = toString().replace("T", " ").split(".").first()
+private fun LocalDateTime.formatTimestamp() = toString().replace("T", " ").split(".").first()
+
+/* Format the Timestamp to YYY-MM-DD */
+private fun LocalDateTime.formatDate() = toString().split("T").first()
 
 
 /* Return the Current DateTime in the System Default TimeZone */
@@ -18,4 +21,5 @@ private fun getCurrentDateTime(): LocalDateTime {
 }
 
 
-val currentTime = getCurrentDateTime().format()
+val currentTime = getCurrentDateTime().formatTimestamp()
+val currentDate = getCurrentDateTime().formatDate()

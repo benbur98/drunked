@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import data.drink.Drink
 import data.drink.DrinkEvent
+import data.drink.Session
 import data.drink.Units
 import data.drink.Volume
 import ui.components.input.DrinkSelect
@@ -28,7 +29,7 @@ import utils.volumeFromAbvAndUnits
 
 
 @Composable
-fun NewDrinkEventForm(drinks: List<Drink>, onDrinkEventAdded: (DrinkEvent) -> Unit) {
+fun NewDrinkEventForm(drinks: List<Drink>, session: Session, onDrinkEventAdded: (DrinkEvent) -> Unit) {
     var drink: Drink? by remember { mutableStateOf(null) }
     var volume: Volume by remember { mutableStateOf(0) }
     var units: Units by remember { mutableStateOf(0f) }
@@ -66,7 +67,8 @@ fun NewDrinkEventForm(drinks: List<Drink>, onDrinkEventAdded: (DrinkEvent) -> Un
                             timestamp = currentTime,
                             drink = drink!!,
                             volume = volume,
-                            units = units
+                            units = units,
+                            session = session
                         )
                     )
                 }) {
