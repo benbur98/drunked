@@ -2,6 +2,10 @@
 
 Koin is used for Dependency Injection.
 
+## Navigation
+
+This app uses Precompose for MultiPlatform Navigation on Android/iOS.
+
 ## Database
 
 This app uses SQLDelight for a MultiPlatform SQLLite Database Implementation on Android/iOS.
