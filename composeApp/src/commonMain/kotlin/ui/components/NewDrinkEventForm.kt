@@ -60,6 +60,7 @@ fun NewDrinkEventForm(drinks: List<Drink>, onDrinkEventAdded: (DrinkEvent) -> Un
             }
             Button(
                 onClick = {
+                    if (drink == null || volume == 0 || units == 0f) return@Button
                     onDrinkEventAdded(
                         DrinkEvent(
                             timestamp = currentTime,

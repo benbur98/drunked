@@ -46,6 +46,7 @@ fun NewDrinkForm(onDrinkAdded: (Drink) -> Unit) {
             }
             Button(
                 onClick = {
+                    if (name.isBlank() || abv == 0f) return@Button
                     onDrinkAdded(
                         Drink(
                             name = name,
