@@ -1,3 +1,4 @@
+import androidx.lifecycle.ViewModel
 import com.drunked.drunked.database.DrunkedDatabase
 import data.drink.DrinkEvent
 import data.drink.Session
@@ -8,7 +9,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 
-class SessionViewModel(database: DrunkedDatabase) {
+class SessionViewModel(database: DrunkedDatabase) : ViewModel() {
     private val drinkEventDataSource = DrinkEventDataSource(database)
     private val sessionDataSource = SessionDataSource(database)
 
@@ -34,7 +35,7 @@ class SessionViewModel(database: DrunkedDatabase) {
             it + drinkEvent
         }
     }
-    
+
     fun getSessionDrinkEvents() {
         drinkEventDataSource.getDrinkEventsForSession(session.id!!)
     }
