@@ -36,7 +36,9 @@ fun SessionRecordingPage(drinkViewModel: DrinkViewModel, sessionViewModel: Sessi
                 sessionViewModel.addDrinkEvent(it)
             }
 
-            Button(onClick = { println("Session Ended") }) {
+            Button(onClick = {
+                sessionViewModel.endSession()
+            }) {
                 Text("End Session")
             }
         }
