@@ -1,28 +1,27 @@
 package data.drink
 
 
-typealias Units = Float
-
-
-typealias Abv = Float
-
-val Abv.multiplier: Float
-    get() = this / 100f
-
-fun Abv.toPercentageString(): String = "${this}%"
-
-
-fun String.toUnits(): Units = this.toFloatOrNull() ?: 0.0f
-
-fun String.toAbv(): Abv = this.toFloatOrNull() ?: 0.0f
-
-fun String.toVolume(): Volume = this.toIntOrNull() ?: 0
+enum class DrinkType(val text: String) {
+    BEER("Beer"),
+    CIDER("Cider"),
+    WINE("Wine"),
+    SPIRIT("Spirit"),
+    COCKTAIL("Cocktail"),
+    UNKNOWN("Unknown");
+}
 
 
 data class Drink(
     val name: String,
     val abv: Abv,
-    val volume: Volume,
-    val units: Units
+    val type: DrinkType = DrinkType.UNKNOWN,
+    val id: Int? = null
 )
 
+
+data class DrinkEvent(
+    val timestamp: String,
+    val drink: Drink,
+    val volume: Volume,
+    val units: Units,
+)

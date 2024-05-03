@@ -2,14 +2,8 @@ package ui.components
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Card
-import androidx.compose.material.Chip
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -17,33 +11,29 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import data.drink.DrinkMeasure
-import data.drink.toAbv
-import data.drink.toUnits
-import data.drink.toVolume
+import data.drink.Abv
+import data.drink.Units
+import data.drink.Volume
+import ui.components.input.AbvInput
+import ui.components.input.UnitsInput
+import ui.components.input.VolumeInput
 import utils.abvFromUnitsAndVolume
 import utils.unitsFromAbvAndVolume
 
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun UnitCalculator() {
-    var units: String by remember { mutableStateOf("") }
-    var abv: String by remember { mutableStateOf("") }
-    var volume: String by remember { mutableStateOf("") }
+    var units: Units by remember { mutableStateOf(0f) }
+    var abv: Abv by remember { mutableStateOf(0f) }
+    var volume: Volume by remember { mutableStateOf(0) }
 
     fun recalculateUnits() {
-        val abvFloat = abv.toAbv()
-        val volumeInt = volume.toVolume()
-        units = unitsFromAbvAndVolume(abvFloat, volumeInt).toString()
+        units = unitsFromAbvAndVolume(abv, volume)
     }
 
     fun recalculateAbv() {
-        val unitsFloat = units.toUnits()
-        val volumeFloat = volume.toVolume()
-        abv = abvFromUnitsAndVolume(unitsFloat, volumeFloat).toString()
+        abv = abvFromUnitsAndVolume(units, volume)
     }
 
     Card(
@@ -52,51 +42,18 @@ fun UnitCalculator() {
             .border(2.dp, Color.Gray)
     ) {
         Column {
-            TextField(
-                value = abv,
-                onValueChange = { newValue ->
-                    val abvFloat = newValue.toAbv()
-                    abv = if (abvFloat > 100) "100" else abvFloat.toString()
-                    recalculateUnits()
-                },
-                label = { Text("Alcohol Percentage") },
-                trailingIcon = { Text("%") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-            )
-            Row {
-                Column {
-                    Row {
-                        DrinkMeasure.entries.forEach {
-                            Chip(
-                                onClick = {
-                                    volume = it.volume.toString()
-                                    recalculateUnits()
-                                },
-                                content = { Text(it.text) }
-                            )
-                        }
-                    }
-                    TextField(
-                        value = volume,
-                        onValueChange = { newValue ->
-                            volume = newValue.toVolume().toString()
-                            recalculateUnits()
-                        },
-                        label = { Text("Volume") },
-                        trailingIcon = { Text("ml") },
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-                    )
-                }
+            AbvInput(abv = abv) {
+                abv = it
+                recalculateUnits()
             }
-            TextField(
-                value = units,
-                onValueChange = { newValue ->
-                    units = newValue.toUnits().toString()
-                    recalculateAbv()
-                },
-                label = { Text("Alcohol Units") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-            )
+            VolumeInput(volume = volume) {
+                volume = it
+                recalculateUnits()
+            }
+            UnitsInput(units = units) {
+                units = it
+                recalculateAbv()
+            }
         }
     }
 }

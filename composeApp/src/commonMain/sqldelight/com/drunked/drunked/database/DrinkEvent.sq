@@ -1,0 +1,17 @@
+import kotlin.Int;
+import kotlin.Float;
+
+
+CREATE TABLE DrinkEvent (
+    timestamp TEXT NOT NULL,
+    drink_id INTEGER AS Int NOT NULL,
+    volume INTEGER AS Int NOT NULL,
+    units REAL AS Float NOT NULL,
+    FOREIGN KEY(drink_id) REFERENCES Drink(id)
+);
+
+selectAll:
+SELECT * FROM DrinkEvent;
+
+insert:
+INSERT INTO DrinkEvent(timestamp, drink_id, volume, units) VALUES (?, ?, ?, ?);
