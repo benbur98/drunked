@@ -12,6 +12,16 @@ class DrinkViewModel(database: DrunkedDatabase) {
     private val _drinks = MutableStateFlow<List<Drink>>(emptyList())
     val drinks = _drinks.asStateFlow()
 
+    init {
+        updateDrinks()
+    }
+
+    fun updateDrinks() {
+        _drinks.update {
+            drinkDataSource.getAllDrinks()
+        }
+    }
+
     fun addDrink(drink: Drink) {
         drinkDataSource.insertDrink(drink)
         _drinks.update {
