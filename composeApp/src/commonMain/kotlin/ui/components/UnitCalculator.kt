@@ -15,9 +15,9 @@ import androidx.compose.ui.unit.dp
 import data.drink.Abv
 import data.drink.Units
 import data.drink.Volume
-import ui.components.drink.AbvInput
-import ui.components.drink.UnitsInput
-import ui.components.drink.VolumeInput
+import ui.components.input.AbvInput
+import ui.components.input.UnitsInput
+import ui.components.input.VolumeInput
 import utils.abvFromUnitsAndVolume
 import utils.unitsFromAbvAndVolume
 

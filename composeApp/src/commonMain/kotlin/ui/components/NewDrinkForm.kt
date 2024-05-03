@@ -19,8 +19,8 @@ import androidx.compose.ui.unit.dp
 import data.drink.Abv
 import data.drink.Drink
 import data.drink.DrinkType
-import ui.components.drink.AbvInput
-import ui.components.drink.DrinkTypeSelect
+import ui.components.input.AbvInput
+import ui.components.input.DrinkTypeSelect
 
 
 @Composable

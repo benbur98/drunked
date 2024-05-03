@@ -1,4 +1,4 @@
-package ui.components.drink
+package ui.components.input
 
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Text

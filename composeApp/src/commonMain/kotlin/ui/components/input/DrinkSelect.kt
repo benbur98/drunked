@@ -1,4 +1,4 @@
-package ui.components.drink
+package ui.components.input
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.rememberScrollState
@@ -11,26 +11,26 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import data.drink.DrinkType
+import data.drink.Drink
 
 
 @Composable
-fun DrinkTypeSelect(onDrinkTypeSelected: (DrinkType) -> Unit) {
+fun DrinkSelect(drinks: List<Drink>, onDrinkSelected: (Drink) -> Unit) {
     var expanded: Boolean by remember { mutableStateOf(false) }
-    var selectedValue: DrinkType? by remember { mutableStateOf(null) }
+    var selectedValue: Drink? by remember { mutableStateOf(null) }
 
     Box {
         Button(onClick = { expanded = true }) {
-            Text(selectedValue?.text ?: "Select")
+            Text(selectedValue?.name ?: "Select")
         }
         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }, scrollState = rememberScrollState()) {
-            DrinkType.entries.forEach {
+            drinks.forEach {
                 DropdownMenuItem(onClick = {
                     expanded = false
                     selectedValue = it
-                    onDrinkTypeSelected(it)
+                    onDrinkSelected(it)
                 }) {
-                    Text(it.text)
+                    Text(it.name)
                 }
             }
         }
