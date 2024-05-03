@@ -1,5 +1,6 @@
 package ui.components.input
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
@@ -21,13 +22,16 @@ fun DrinkTypeSelect(onDrinkTypeSelected: (DrinkType) -> Unit) {
     var expanded: Boolean by remember { mutableStateOf(false) }
     var selectedValue: DrinkType? by remember { mutableStateOf(null) }
 
-    ExposedDropdownMenuBox(expanded = expanded, onExpandedChange = { expanded = !expanded }) {
+    ExposedDropdownMenuBox(
+        expanded = expanded,
+        onExpandedChange = { expanded = !expanded },
+    ) {
         TextField(
             value = selectedValue?.text ?: "Select Drink Type",
             onValueChange = { },
             readOnly = true,
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-            modifier = Modifier.menuAnchor()
+            modifier = Modifier.menuAnchor().fillMaxWidth()
         )
         ExposedDropdownMenu(
             expanded = expanded,

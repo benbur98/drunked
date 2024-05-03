@@ -99,7 +99,7 @@ private val AppShapes = Shapes(
 @Composable
 internal fun DrunkedTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable() () -> Unit
+    content: @Composable () -> Unit
 ) {
     val colorScheme = when {
         darkTheme -> darkScheme

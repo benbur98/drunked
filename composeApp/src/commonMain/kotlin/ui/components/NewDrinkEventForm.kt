@@ -2,6 +2,7 @@ package ui.components
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -14,6 +15,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import data.drink.Drink
 import data.drink.DrinkEvent
@@ -71,7 +73,10 @@ fun NewDrinkEventForm(drinks: List<Drink>, session: Session, onDrinkEventAdded: 
                             session = session
                         )
                     )
-                }) {
+                },
+                modifier = Modifier.fillMaxWidth(),
+                shape = RectangleShape
+            ) {
                 Text("Add DrinkEvent")
             }
         }
