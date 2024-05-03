@@ -14,6 +14,11 @@ import ui.components.NewDrinkEventForm
 fun SessionRecordingPage(drinkViewModel: DrinkViewModel, sessionViewModel: SessionViewModel) {
     val drinks by drinkViewModel.drinks.collectAsState()
 
+    val drinkEvents by sessionViewModel.drinkEvents.collectAsState()
+    val numberOfDrinks = drinkEvents.size
+
+    Text("Session Drinks: $numberOfDrinks")
+
     NewDrinkEventForm(drinks, sessionViewModel.session) {
         sessionViewModel.addDrinkEvent(it)
     }

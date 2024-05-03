@@ -1,6 +1,8 @@
 # drunked
 
-Koin is used for Dependency Injection.
+ViewModels are used from the Experimental Compose Multiplatform Lifecycle support.
+
+Dependency Injection is Manual.
 
 ## Database
 
