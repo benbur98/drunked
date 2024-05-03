@@ -1,6 +1,7 @@
-package com.drunked.drunked.ui.theme
+package ui.theme
 
 import androidx.compose.ui.graphics.Color
+
 
 val primaryLight = Color(0xFF6E5D0E)
 val onPrimaryLight = Color(0xFFFFFFFF)
