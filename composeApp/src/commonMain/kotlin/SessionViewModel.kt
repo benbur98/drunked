@@ -21,6 +21,10 @@ class SessionViewModel(database: DrunkedDatabase) {
         session = sessionDataSource.insertAndReturnSession(Session())
     }
 
+    fun resumeSession(id: Int) {
+        session = sessionDataSource.getSessionById(id)
+    }
+
     private val _drinkEvents = MutableStateFlow<List<DrinkEvent>>(emptyList())
     val drinkEvents = _drinkEvents.asStateFlow()
 
@@ -29,5 +33,9 @@ class SessionViewModel(database: DrunkedDatabase) {
         _drinkEvents.update {
             it + drinkEvent
         }
+    }
+    
+    fun getSessionDrinkEvents() {
+        drinkEventDataSource.getDrinkEventsForSession(session.id!!)
     }
 }
