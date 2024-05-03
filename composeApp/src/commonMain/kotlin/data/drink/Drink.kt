@@ -10,6 +10,7 @@ enum class DrinkType(val text: String) {
     WINE("Wine"),
     SPIRIT("Spirit"),
     COCKTAIL("Cocktail"),
+    OTHER("Other"),
     UNKNOWN("Unknown");
 }
 
