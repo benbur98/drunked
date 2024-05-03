@@ -4,60 +4,50 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import data.drink.Drink
-import data.drink.DrinkType
-import data.drink.Session
+import androidx.lifecycle.viewmodel.compose.viewModel
+import di.AppModule
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import ui.SessionRecordingPage
 import ui.components.Logo
-import ui.components.NewDrinkEventForm
 import ui.components.NewDrinkForm
+import ui.components.display.DrinkList
 import ui.theme.DrunkedTheme
 
 
 @Composable
 @Preview
-fun App() {
-    var session: Session? by remember { mutableStateOf(null) }
+fun App(appModule: AppModule) {
+    val database = appModule.database
+
+    val drinkViewModel: DrinkViewModel = viewModel { DrinkViewModel(database) }
+    val sessionViewModel: SessionViewModel = viewModel { SessionViewModel(database) }
+
+    val drinks by drinkViewModel.drinks.collectAsState()
+    val session by sessionViewModel.session.collectAsState()
 
     DrunkedTheme {
         Surface {
             Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
                 Logo()
 
-                Button(onClick = { session = Session() }, enabled = session == null) {
+                Button(onClick = { sessionViewModel.startSession() }, enabled = !sessionViewModel.sessionOngoing) {
                     Text("Start Session")
                 }
 
+                DrinkList(drinks)
+
                 NewDrinkForm {
-                    println(it)
+                    drinkViewModel.addDrink(it)
                 }
 
                 if (session != null) {
-                    NewDrinkEventForm(drinks, session!!) {
-                        println(it)
-                    }
+                    SessionRecordingPage(drinkViewModel, sessionViewModel)
                 }
             }
         }
     }
 }
-
-
-val drinks = listOf(
-    Drink(
-        name = "Beer1",
-        abv = 5.0f,
-        type = DrinkType.BEER
-    ),
-    Drink(
-        name = "Wine1",
-        abv = 12.0f,
-        type = DrinkType.WINE
-    )
-)

@@ -38,6 +38,8 @@ kotlin {
             implementation(libs.kotlinx.datetime)
             implementation(libs.sqlDelight.primitive.adapters)
             implementation(libs.koin.core)
+            implementation(libs.lifecycle.viewmodel.compose)
+            implementation(libs.navigation.compose)
         }
         androidMain.dependencies {
             implementation(libs.compose.ui.tooling.preview)

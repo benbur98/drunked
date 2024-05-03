@@ -10,6 +10,7 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) {
         appDeclaration()
         modules(
             databaseModule,
+//            viewModelModules,
             platformModule()
         )
     }
