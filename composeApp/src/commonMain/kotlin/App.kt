@@ -4,18 +4,12 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import data.drink.Drink
-import data.drink.DrinkType
-import data.drink.Session
+import com.drunked.drunked.database.DrunkedDatabase
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import ui.SessionRecordingPage
 import ui.components.Logo
-import ui.components.NewDrinkEventForm
 import ui.components.NewDrinkForm
 import ui.theme.DrunkedTheme
 
@@ -23,14 +17,16 @@ import ui.theme.DrunkedTheme
 @Composable
 @Preview
 fun App() {
-    var session: Session? by remember { mutableStateOf(null) }
+    val database: DrunkedDatabase
+    val drinksViewModel: DrinkViewModel = DrinkViewModel(database)
+    val sessionViewModel: SessionViewModel = SessionViewModel(database)
 
     DrunkedTheme {
         Surface {
             Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
                 Logo()
 
-                Button(onClick = { session = Session() }, enabled = session == null) {
+                Button(onClick = { sessionViewModel.startSession() }, enabled = !sessionViewModel.sessionOngoing) {
                     Text("Start Session")
                 }
 
@@ -38,26 +34,10 @@ fun App() {
                     println(it)
                 }
 
-                if (session != null) {
-                    NewDrinkEventForm(drinks, session!!) {
-                        println(it)
-                    }
+                if (sessionViewModel.sessionOngoing) {
+                    SessionRecordingPage(drinksViewModel, sessionViewModel)
                 }
             }
         }
     }
 }
-
-
-val drinks = listOf(
-    Drink(
-        name = "Beer1",
-        abv = 5.0f,
-        type = DrinkType.BEER
-    ),
-    Drink(
-        name = "Wine1",
-        abv = 12.0f,
-        type = DrinkType.WINE
-    )
-)

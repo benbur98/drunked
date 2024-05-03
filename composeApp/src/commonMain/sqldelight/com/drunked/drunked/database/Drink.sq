@@ -18,3 +18,6 @@ SELECT * FROM Drink;
 
 insert:
 INSERT INTO Drink(name, abv, type) VALUES (?, ?, ?);
+
+lastInsertId:
+SELECT last_insert_rowid();
