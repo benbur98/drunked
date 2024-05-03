@@ -11,6 +11,7 @@ This app uses SQLDelight for a MultiPlatform SQLLite Database Implementation on 
 ```mermaid
 erDiagram
     Drink ||--o{ DrinkEvent: "has"
+    Session ||--o{ DrinkEvent: "has"
     Drink {
         int id
         string name
@@ -18,10 +19,16 @@ erDiagram
         string type
     }
     DrinkEvent {
+        int id
         string timestamp
-        int drink_id
         int volume
         float units
+        int drink_id
+        int session_id
+    }
+    Session {
+        int id
+        string date
     }
 ```
 

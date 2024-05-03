@@ -1,8 +1,8 @@
 package ui.components.input
 
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.input.KeyboardType
 import data.drink.Abv
