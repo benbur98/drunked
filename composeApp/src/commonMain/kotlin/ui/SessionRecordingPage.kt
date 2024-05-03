@@ -2,6 +2,7 @@ package ui
 
 import DrinkViewModel
 import SessionViewModel
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,13 +18,15 @@ fun SessionRecordingPage(drinkViewModel: DrinkViewModel, sessionViewModel: Sessi
     val drinkEvents by sessionViewModel.drinkEvents.collectAsState()
     val numberOfDrinks = drinkEvents.size
 
-    Text("Session Drinks: $numberOfDrinks")
+    Column {
+        Text("Session Drinks: $numberOfDrinks")
 
-    NewDrinkEventForm(drinks, sessionViewModel.session) {
-        sessionViewModel.addDrinkEvent(it)
-    }
+        NewDrinkEventForm(drinks, sessionViewModel.session) {
+            sessionViewModel.addDrinkEvent(it)
+        }
 
-    Button(onClick = { println("Session Ended") }) {
-        Text("End Session")
+        Button(onClick = { println("Session Ended") }) {
+            Text("End Session")
+        }
     }
 }
