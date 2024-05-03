@@ -14,7 +14,8 @@ enum class DrinkType(val text: String) {
 data class Drink(
     val name: String,
     val abv: Abv,
-    val type: DrinkType = DrinkType.UNKNOWN
+    val type: DrinkType = DrinkType.UNKNOWN,
+    val id: Int? = null
 )
 
 

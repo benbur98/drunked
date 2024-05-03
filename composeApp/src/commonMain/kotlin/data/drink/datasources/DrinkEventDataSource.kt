@@ -16,10 +16,10 @@ class DrinkEventDataSource(private val database: DrunkedDatabase) {
         return drinkEventQueries.selectAll(::drinkEventMapper).executeAsList()
     }
 
-    fun insertDrink(drinkEvent: DrinkEvent, drink_id: Int) {
+    fun insertDrinkEvent(drinkEvent: DrinkEvent) {
         drinkEventQueries.insert(
             timestamp = drinkEvent.timestamp,
-            drink_id = drink_id,
+            drink_id = drinkEvent.drink.id!!,
             volume = drinkEvent.volume,
             units = drinkEvent.units
         )

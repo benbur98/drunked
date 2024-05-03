@@ -5,7 +5,6 @@ import data.drink.Units
 import data.drink.Volume
 import data.drink.liters
 import data.drink.toVolume
-import kotlin.math.round
 
 
 fun unitsFromAbvAndVolume(abv: Abv, volume: Volume): Units {
@@ -17,7 +16,7 @@ fun abvFromUnitsAndVolume(units: Float, volume: Volume): Abv {
 }
 
 fun volumeFromAbvAndUnits(abv: Abv, units: Units): Volume {
-    return round(units / abv).toVolume()
+    return (units / abv).toVolume()
 }
 
 

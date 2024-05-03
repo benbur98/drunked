@@ -4,10 +4,12 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import data.drink.Drink
+import data.drink.DrinkType
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import ui.components.Logo
+import ui.components.NewDrinkEventForm
 import ui.components.NewDrinkForm
-import ui.components.UnitCalculator
 import utils.currentTime
 
 
@@ -19,11 +21,27 @@ fun App() {
         Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
             Logo()
 
-            UnitCalculator()
+            NewDrinkForm {
+                println(it)
+            }
 
-            NewDrinkForm { drink ->
-                println(drink)
+            NewDrinkEventForm(drinks) {
+                println(it)
             }
         }
     }
 }
+
+
+val drinks = listOf(
+    Drink(
+        name = "Beer1",
+        abv = 5.0f,
+        type = DrinkType.BEER
+    ),
+    Drink(
+        name = "Wine1",
+        abv = 12.0f,
+        type = DrinkType.WINE
+    )
+)

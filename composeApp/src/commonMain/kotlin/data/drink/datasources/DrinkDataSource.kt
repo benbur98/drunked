@@ -12,7 +12,7 @@ class DrinkDataSource(database: DrunkedDatabase) {
     private val drinkQueries = database.drinkQueries
 
     private fun drinkMapper(id: Int, drink: String, abv: Float, type: DrinkType): Drink =
-        Drink(name = drink, abv = abv, type = type)
+        Drink(name = drink, abv = abv, type = type, id = id)
 
     fun getDrinkById(id: Int): Drink {
         return drinkQueries.selectById(id, ::drinkMapper).executeAsOne()
