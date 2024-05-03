@@ -27,6 +27,7 @@ fun App(appModule: AppModule) {
     val sessionViewModel: SessionViewModel = viewModel { SessionViewModel(database) }
 
     val drinks by drinkViewModel.drinks.collectAsState()
+    val session by sessionViewModel.session.collectAsState()
 
     DrunkedTheme {
         Surface {
@@ -43,7 +44,7 @@ fun App(appModule: AppModule) {
                     drinkViewModel.addDrink(it)
                 }
 
-                if (sessionViewModel.sessionOngoing) {
+                if (session != null) {
                     SessionRecordingPage(drinkViewModel, sessionViewModel)
                 }
             }

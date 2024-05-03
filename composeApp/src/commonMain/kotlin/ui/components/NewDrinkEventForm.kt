@@ -73,6 +73,9 @@ fun NewDrinkEventForm(drinks: List<Drink>, session: Session, onDrinkEventAdded: 
                             session = session
                         )
                     )
+                    drink = null
+                    volume = 0
+                    units = 0f
                 },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RectangleShape

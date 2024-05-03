@@ -13,17 +13,22 @@ class SessionViewModel(database: DrunkedDatabase) : ViewModel() {
     private val drinkEventDataSource = DrinkEventDataSource(database)
     private val sessionDataSource = SessionDataSource(database)
 
-    lateinit var session: Session
+    private val _session = MutableStateFlow<Session?>(null)
+    val session = _session.asStateFlow()
 
     val sessionOngoing: Boolean
-        get() = ::session.isInitialized
+        get() = _session.value != null
 
     fun startSession() {
-        session = sessionDataSource.insertAndReturnSession(Session())
+        _session.update { sessionDataSource.insertAndReturnSession(Session()) }
     }
 
     fun resumeSession(id: Int) {
-        session = sessionDataSource.getSessionById(id)
+        _session.update { sessionDataSource.getSessionById(id) }
+    }
+
+    fun endSession() {
+        _session.update { null }
     }
 
     private val _drinkEvents = MutableStateFlow<List<DrinkEvent>>(emptyList())
@@ -31,12 +36,11 @@ class SessionViewModel(database: DrunkedDatabase) : ViewModel() {
 
     fun addDrinkEvent(drinkEvent: DrinkEvent) {
         drinkEventDataSource.insertDrinkEvent(drinkEvent)
-        _drinkEvents.update {
-            it + drinkEvent
-        }
+        _drinkEvents.update { it + drinkEvent }
     }
 
     fun getSessionDrinkEvents() {
-        drinkEventDataSource.getDrinkEventsForSession(session.id!!)
+        if (!sessionOngoing) return
+        drinkEventDataSource.getDrinkEventsForSession(session.value!!.id!!)
     }
 }
