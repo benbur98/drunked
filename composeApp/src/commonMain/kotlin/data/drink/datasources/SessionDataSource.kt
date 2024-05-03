@@ -20,9 +20,17 @@ class SessionDataSource(private val database: DrunkedDatabase) {
     }
 
     fun insertSession(session: Session) {
-        sessionQueries.insert(
-            date = session.date,
-        )
+        sessionQueries.insert(date = session.date)
+    }
+
+    fun insertAndReturnSession(session: Session): Session {
+        var insertedSession: Session? = null
+        database.transaction {
+            sessionQueries.insert(date = session.date)
+            val lastInsertId = sessionQueries.lastInsertId().executeAsOne()
+            insertedSession = sessionQueries.selectById(lastInsertId.toInt(), ::sessionMapper).executeAsOne()
+        }
+        return insertedSession!!
     }
 
     companion object {

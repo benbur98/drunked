@@ -15,3 +15,6 @@ SELECT * FROM Session;
 
 insert:
 INSERT INTO Session(date) VALUES (?);
+
+lastInsertId:
+SELECT last_insert_rowid();
