@@ -36,7 +36,7 @@ fun DrinkList(drinks: List<Drink>) {
     var filteredDrinks by remember { mutableStateOf(orderedDrinks) }
 
     var searchQuery by remember { mutableStateOf("") }
-    var selectedDrinkType by remember { mutableStateOf<DrinkType?>(null) }
+    var selectedDrinkTypes: List<DrinkType>? by remember { mutableStateOf(null) }
     var sortType by remember { mutableStateOf(SortType.NAME_ASC) }
 
     // Map the Drinks to be Grouped by the First Letter of the Name and it's Index
@@ -51,7 +51,10 @@ fun DrinkList(drinks: List<Drink>) {
     fun filterDrinks() {
         filteredDrinks = orderedDrinks
             .filter { it.name.contains(searchQuery, ignoreCase = true) }
-            .filter { selectedDrinkType?.run { it.type == selectedDrinkType } ?: true }
+            .filter {
+                if (selectedDrinkTypes.isNullOrEmpty()) return@filter true
+                it.type in selectedDrinkTypes!!
+            }
             .let {
                 when (sortType) {
                     SortType.NAME_ASC -> it.sortedBy { it.name }
@@ -75,7 +78,7 @@ fun DrinkList(drinks: List<Drink>) {
         )
 
         DrinkTypeSelectChips {
-            selectedDrinkType = it
+            selectedDrinkTypes = it
             filterDrinks()
         }
 
