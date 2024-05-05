@@ -14,6 +14,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,7 +38,7 @@ fun DrinkList(drinks: List<Drink>) {
 
     var searchQuery by remember { mutableStateOf("") }
     var selectedDrinkTypes: List<DrinkType>? by remember { mutableStateOf(null) }
-    var sortType by remember { mutableStateOf(SortType.NAME_ASC) }
+    var sortType: SortType? by remember { mutableStateOf(null) }
 
     // Map the Drinks to be Grouped by the First Letter of the Name and it's Index
     val drinkLetterMap = orderedDrinks.mapIndexed { index, drink ->
@@ -55,14 +56,19 @@ fun DrinkList(drinks: List<Drink>) {
                 if (selectedDrinkTypes.isNullOrEmpty()) return@filter true
                 it.type in selectedDrinkTypes!!
             }
-            .let {
+            .let { drinks ->
                 when (sortType) {
-                    SortType.NAME_ASC -> it.sortedBy { it.name }
-                    SortType.NAME_DESC -> it.sortedByDescending { it.name }
-                    SortType.ABV_ASC -> it.sortedBy { it.abv }
-                    SortType.ABV_DESC -> it.sortedByDescending { it.abv }
+                    SortType.NAME_ASC -> drinks.sortedBy { it.name }
+                    SortType.NAME_DESC -> drinks.sortedByDescending { it.name }
+                    SortType.ABV_ASC -> drinks.sortedBy { it.abv }
+                    SortType.ABV_DESC -> drinks.sortedByDescending { it.abv }
+                    null -> drinks
                 }
             }
+    }
+
+    LaunchedEffect(drinks) {
+        filterDrinks()
     }
 
     Column {
