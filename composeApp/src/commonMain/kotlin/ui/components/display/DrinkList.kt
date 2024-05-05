@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -100,17 +101,20 @@ fun DrinkList(drinks: List<Drink>) {
             filterDrinks()
         }
 
-        Row(verticalAlignment = Alignment.CenterVertically) {
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxSize()) {
             LazyColumn(
                 state = listState,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f).align(Alignment.Top)
             ) {
-                drinkLetters.forEach {
-                    stickyHeader { LetterHeader(it) }
-                    items(drinkLetterMap[it]!!) { (drinkNameLetter, index) ->
-                        DrinkCard(orderedDrinks[index])
-                    }
+                items(filteredDrinks) { drink ->
+                    DrinkCard(drink)
                 }
+//                drinkLetters.forEach {
+//                    stickyHeader { LetterHeader(it) }
+//                    items(drinkLetterMap[it]!!) { (drinkNameLetter, index) ->
+//                        DrinkCard(orderedDrinks[index])
+//                    }
+//                }
             }
 
             Column(modifier = Modifier.width(20.dp)) {

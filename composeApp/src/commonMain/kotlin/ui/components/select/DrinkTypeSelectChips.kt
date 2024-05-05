@@ -3,7 +3,10 @@ package ui.components.select
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -30,6 +33,9 @@ fun DrinkTypeSelectChips(onSelect: (List<DrinkType>?) -> Unit) {
                         selectedDrinkTypes.orEmpty() + it
                     }
                     onSelect(selectedDrinkTypes)
+                },
+                trailingIcon = {
+                    if (it in selectedDrinkTypes.orEmpty()) Icon(Icons.Default.Close, "Close")
                 }
             )
         }
