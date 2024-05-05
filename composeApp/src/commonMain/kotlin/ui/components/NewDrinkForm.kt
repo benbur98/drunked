@@ -57,6 +57,9 @@ fun NewDrinkForm(onDrinkAdded: (Drink) -> Unit) {
                             type = drinkType ?: DrinkType.UNKNOWN
                         )
                     )
+                    name = ""
+                    abv = 0f
+                    drinkType = null
                 },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RectangleShape
