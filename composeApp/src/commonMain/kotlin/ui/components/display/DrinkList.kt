@@ -8,6 +8,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -22,7 +25,9 @@ import androidx.compose.ui.unit.dp
 import data.drink.Drink
 import data.drink.DrinkType
 import kotlinx.coroutines.launch
+import ui.components.input.DrinkSortSelect
 import ui.components.input.DrinkTypeSelectChips
+import ui.components.input.SortType
 
 
 @Composable
@@ -32,6 +37,7 @@ fun DrinkList(drinks: List<Drink>) {
 
     var searchQuery by remember { mutableStateOf("") }
     var selectedDrinkType by remember { mutableStateOf<DrinkType?>(null) }
+    var sortType by remember { mutableStateOf(SortType.NAME_ASC) }
 
     // Map the Drinks to be Grouped by the First Letter of the Name and it's Index
     val drinkLetterMap = orderedDrinks.mapIndexed { index, drink ->
@@ -44,10 +50,16 @@ fun DrinkList(drinks: List<Drink>) {
 
     fun filterDrinks() {
         filteredDrinks = orderedDrinks
-            .filter {
-                it.name.contains(searchQuery, ignoreCase = true)
-            }
+            .filter { it.name.contains(searchQuery, ignoreCase = true) }
             .filter { selectedDrinkType?.run { it.type == selectedDrinkType } ?: true }
+            .let {
+                when (sortType) {
+                    SortType.NAME_ASC -> it.sortedBy { it.name }
+                    SortType.NAME_DESC -> it.sortedByDescending { it.name }
+                    SortType.ABV_ASC -> it.sortedBy { it.abv }
+                    SortType.ABV_DESC -> it.sortedByDescending { it.abv }
+                }
+            }
     }
 
     Column {
@@ -58,11 +70,17 @@ fun DrinkList(drinks: List<Drink>) {
                 filterDrinks()
             },
             label = { Text("Search Drinks") },
+            leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Search Icon") },
             modifier = Modifier.fillMaxWidth()
         )
 
-        DrinkTypeSelectChips { type ->
-            selectedDrinkType = type
+        DrinkTypeSelectChips {
+            selectedDrinkType = it
+            filterDrinks()
+        }
+
+        DrinkSortSelect {
+            sortType = it
             filterDrinks()
         }
 
