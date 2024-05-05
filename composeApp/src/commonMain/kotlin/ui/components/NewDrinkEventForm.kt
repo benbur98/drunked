@@ -22,9 +22,9 @@ import data.drink.DrinkEvent
 import data.drink.Session
 import data.drink.Units
 import data.drink.Volume
-import ui.components.input.DrinkSelect
 import ui.components.input.UnitsInput
 import ui.components.input.VolumeInput
+import ui.components.select.DrinkSelect
 import utils.currentTime
 import utils.unitsFromAbvAndVolume
 import utils.volumeFromAbvAndUnits
