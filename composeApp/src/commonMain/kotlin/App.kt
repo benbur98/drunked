@@ -11,7 +11,6 @@ import data.drink.datasources.SessionDataSource
 import di.AppModule
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import ui.components.Logo
-import ui.components.NewDrinkForm
 import ui.components.display.DrinkList
 import ui.theme.DrunkedTheme
 
@@ -41,9 +40,9 @@ fun App(appModule: AppModule) {
 //                    Text("Start Session")
 //                }
 
-                NewDrinkForm {
-                    drinkViewModel.addDrink(it)
-                }
+//                NewDrinkForm {
+//                    drinkViewModel.addDrink(it)
+//                }
 
                 DrinkList(drinks)
 

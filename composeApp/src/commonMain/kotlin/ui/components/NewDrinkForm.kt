@@ -22,7 +22,7 @@ import data.drink.Abv
 import data.drink.Drink
 import data.drink.DrinkType
 import ui.components.input.AbvInput
-import ui.components.input.DrinkTypeSelect
+import ui.components.select.DrinkTypeSelect
 
 
 @Composable

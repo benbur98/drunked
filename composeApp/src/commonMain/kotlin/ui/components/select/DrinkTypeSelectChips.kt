@@ -1,4 +1,4 @@
-package ui.components.input
+package ui.components.select
 
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Row

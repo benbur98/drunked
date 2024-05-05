@@ -1,5 +1,7 @@
 package ui.components.display
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -8,11 +10,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -26,11 +25,19 @@ import androidx.compose.ui.unit.dp
 import data.drink.Drink
 import data.drink.DrinkType
 import kotlinx.coroutines.launch
-import ui.components.input.DrinkSortSelect
-import ui.components.input.DrinkTypeSelectChips
-import ui.components.input.SortType
+import ui.components.input.SearchInput
+import ui.components.select.DrinkSortSelect
+import ui.components.select.DrinkTypeSelectChips
+import ui.components.select.SortType
 
 
+@Composable
+private fun LetterHeader(letter: Char) {
+    Text(letter.toString(), modifier = Modifier.fillMaxWidth().background(color = MaterialTheme.colorScheme.surface))
+}
+
+
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun DrinkList(drinks: List<Drink>) {
     val orderedDrinks = drinks.sortedBy { it.name }
@@ -41,10 +48,12 @@ fun DrinkList(drinks: List<Drink>) {
     var sortType: SortType? by remember { mutableStateOf(null) }
 
     // Map the Drinks to be Grouped by the First Letter of the Name and it's Index
-    val drinkLetterMap = orderedDrinks.mapIndexed { index, drink ->
-        drink.name.first().uppercaseChar() to index
-    }.groupBy { it.first }
-    val drinkLetters = drinkLetterMap.keys.sorted()
+    var drinkLetterMap by remember {
+        mutableStateOf(orderedDrinks.mapIndexed { index, drink ->
+            drink.name.first().uppercaseChar() to index
+        }.groupBy { it.first })
+    }
+    var drinkLetters by remember { mutableStateOf(drinkLetterMap.keys.sorted()) }
 
     val listState = rememberLazyListState()
     val scope = rememberCoroutineScope()
@@ -65,6 +74,10 @@ fun DrinkList(drinks: List<Drink>) {
                     null -> drinks
                 }
             }
+        drinkLetterMap = filteredDrinks.mapIndexed { index, drink ->
+            drink.name.first().uppercaseChar() to index
+        }.groupBy { it.first }
+        drinkLetters = drinkLetterMap.keys.sorted()
     }
 
     LaunchedEffect(drinks) {
@@ -72,16 +85,10 @@ fun DrinkList(drinks: List<Drink>) {
     }
 
     Column {
-        TextField(
-            value = searchQuery,
-            onValueChange = {
-                searchQuery = it
-                filterDrinks()
-            },
-            label = { Text("Search Drinks") },
-            leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Search Icon") },
-            modifier = Modifier.fillMaxWidth()
-        )
+        SearchInput {
+            searchQuery = it
+            filterDrinks()
+        }
 
         DrinkTypeSelectChips {
             selectedDrinkTypes = it
@@ -98,8 +105,11 @@ fun DrinkList(drinks: List<Drink>) {
                 state = listState,
                 modifier = Modifier.weight(1f)
             ) {
-                items(filteredDrinks) {
-                    DrinkCard(it)
+                drinkLetters.forEach {
+                    stickyHeader { LetterHeader(it) }
+                    items(drinkLetterMap[it]!!) { (drinkNameLetter, index) ->
+                        DrinkCard(orderedDrinks[index])
+                    }
                 }
             }
 

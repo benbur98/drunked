@@ -1,4 +1,4 @@
-package ui.components.input
+package ui.components.select
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.DropdownMenuItem

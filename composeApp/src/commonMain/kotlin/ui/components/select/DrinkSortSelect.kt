@@ -1,4 +1,4 @@
-package ui.components.input
+package ui.components.select
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
