@@ -153,7 +153,8 @@ fun ContentItem(
                     MaterialTheme.colorScheme.primaryContainer
                 } else {
                     Color.Transparent
-                }
+                },
+                shape = MaterialTheme.shapes.extraLarge
             )
             .clickable { onClick(date) }
     ) {
