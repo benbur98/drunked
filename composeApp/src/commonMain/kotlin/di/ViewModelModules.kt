@@ -1,11 +1,11 @@
 package di
 
 import DrinkViewModel
-import SessionViewModel
+import SessionRecordViewModel
 import org.koin.dsl.module
 
 
 val viewModelModules = module {
     factory { DrinkViewModel(get()) }
-    factory { SessionViewModel(get()) }
+    factory { SessionRecordViewModel(get()) }
 }

@@ -21,6 +21,7 @@ fun AbvInput(abv: Abv, onAbvChange: (Abv) -> Unit) {
         label = { Text("Alcohol Percentage") },
         trailingIcon = { Text("%") },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
+        singleLine = true
     )
 }

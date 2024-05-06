@@ -26,6 +26,7 @@ fun SearchInput(onChange: (String) -> Unit) {
         },
         label = { Text("Search") },
         leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Search Icon") },
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
+        singleLine = true
     )
 }

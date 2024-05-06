@@ -31,12 +31,9 @@ fun NewDrinkForm(onDrinkAdded: (Drink) -> Unit) {
     var abv: Abv by remember { mutableStateOf(0f) }
     var drinkType: DrinkType? by remember { mutableStateOf(null) }
 
-    Card(
-        modifier = Modifier
-            .padding(16.dp)
-            .border(2.dp, Color.Gray)
-    ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Text("New Drink")
+        Card(modifier = Modifier.padding(16.dp).border(2.dp, Color.Gray)) {
             Column(modifier = Modifier.fillMaxWidth()) {
                 TextField(
                     value = name,
@@ -47,25 +44,23 @@ fun NewDrinkForm(onDrinkAdded: (Drink) -> Unit) {
                 AbvInput(abv = abv) { abv = it }
                 DrinkTypeSelect { drinkType = it }
             }
-            Button(
-                onClick = {
-                    if (name.isBlank() || abv == 0f) return@Button
-                    onDrinkAdded(
-                        Drink(
-                            name = name,
-                            abv = abv,
-                            type = drinkType ?: DrinkType.UNKNOWN
-                        )
-                    )
-                    name = ""
-                    abv = 0f
-                    drinkType = null
-                },
-                modifier = Modifier.fillMaxWidth(),
-                shape = RectangleShape
-            ) {
-                Text("Add Drink")
-            }
         }
+        Button(
+            onClick = {
+                if (name.isBlank() || abv == 0f) return@Button
+                onDrinkAdded(
+                    Drink(
+                        name = name,
+                        abv = abv,
+                        type = drinkType ?: DrinkType.UNKNOWN
+                    )
+                )
+                name = ""
+                abv = 0f
+                drinkType = null
+            },
+            modifier = Modifier.fillMaxWidth(),
+            shape = RectangleShape
+        ) { Text("Add Drink") }
     }
 }

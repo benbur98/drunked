@@ -38,6 +38,7 @@ kotlin {
             implementation(libs.kotlinx.datetime)
             implementation(libs.sqlDelight.primitive.adapters)
             implementation(libs.koin.core)
+            implementation(libs.koin.compose)
             implementation(libs.lifecycle.viewmodel.compose)
             implementation(libs.navigation.compose)
         }
@@ -46,7 +47,6 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             implementation(libs.sqlDelight.android.driver)
             implementation(libs.koin.android)
-            implementation(libs.koin.android.compose)
         }
         iosMain.dependencies {
             implementation(libs.sqlDelight.native.driver)

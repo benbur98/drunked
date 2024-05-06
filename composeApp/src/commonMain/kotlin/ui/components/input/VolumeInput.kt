@@ -36,7 +36,8 @@ fun VolumeInput(volume: Volume, onVolumeChanged: (Volume) -> Unit) {
             label = { Text("Volume") },
             trailingIcon = { Text("ml") },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            singleLine = true
         )
     }
 }

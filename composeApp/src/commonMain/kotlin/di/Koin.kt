@@ -1,6 +1,5 @@
 package di
 
-import data.databaseModule
 import org.koin.core.context.startKoin
 import org.koin.dsl.KoinAppDeclaration
 
@@ -15,6 +14,3 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) {
         )
     }
 }
-
-
-fun initKoin() = initKoin {}

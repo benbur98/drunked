@@ -9,29 +9,30 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 
-class SessionViewModel(database: DrunkedDatabase) : ViewModel() {
+class SessionRecordViewModel(database: DrunkedDatabase, sessionId: Int? = null) : ViewModel() {
     private val drinkEventDataSource = DrinkEventDataSource(database)
     private val sessionDataSource = SessionDataSource(database)
 
     private val _session = MutableStateFlow<Session?>(null)
     val session = _session.asStateFlow()
 
-    val sessionOngoing: Boolean
+    private val sessionOngoing: Boolean
         get() = _session.value != null
 
-    fun startSession() {
+    init {
+        if (sessionId != null) resumeSession(sessionId)
+        else startSession()
+    }
+
+    private fun startSession() {
         if (sessionOngoing) return
         _session.update { sessionDataSource.insertAndReturnSession(Session()) }
     }
 
-    fun resumeSession(id: Int) {
+    private fun resumeSession(id: Int) {
         if (sessionOngoing) return
         _session.update { sessionDataSource.getSessionById(id) }
-    }
-
-    fun endSession() {
-        if (!sessionOngoing) return
-        _session.update { null }
+        getSessionDrinkEvents()
     }
 
     private val _drinkEvents = MutableStateFlow<List<DrinkEvent>>(emptyList())
@@ -43,8 +44,8 @@ class SessionViewModel(database: DrunkedDatabase) : ViewModel() {
         _drinkEvents.update { it + drinkEvent }
     }
 
-    fun getSessionDrinkEvents() {
+    private fun getSessionDrinkEvents() {
         if (!sessionOngoing) return
-        drinkEventDataSource.getDrinkEventsForSession(session.value!!.id!!)
+        _drinkEvents.value = drinkEventDataSource.getDrinkEventsForSession(session.value!!.id!!)
     }
 }
