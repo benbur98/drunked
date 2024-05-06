@@ -24,7 +24,7 @@ sealed class NavigationBarItem(var title: String, var icon: ImageVector, var scr
 
 @Composable
 fun NavigationBottomBar(currentScreen: Screen, navigateTo: (Screen) -> Unit) {
-    val navItems = listOf(NavigationBarItem.Home, NavigationBarItem.Drinks, NavigationBarItem.Sessions)
+    val navItems = listOf(NavigationBarItem.Sessions, NavigationBarItem.Home, NavigationBarItem.Drinks)
 
     BottomNavigation(
         backgroundColor = MaterialTheme.colorScheme.primaryContainer,
