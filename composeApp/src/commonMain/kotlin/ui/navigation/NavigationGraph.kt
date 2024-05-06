@@ -4,11 +4,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import ui.navigation.screens.DrinksScreen
 import ui.navigation.screens.HomeScreen
 import ui.navigation.screens.SessionHistoryScreen
+import ui.navigation.screens.SessionOverviewScreen
 import ui.navigation.screens.SessionRecordScreen
 
 
@@ -27,7 +30,20 @@ fun NavigationGraph(navController: NavHostController) {
             DrinksScreen()
         }
         composable(route = Screen.SessionHistoryScreen.route) {
-            SessionHistoryScreen()
+            val toSessionOverviewScreen = { sessionId: Int ->
+                navController.navigate("${Screen.SessionOverviewScreen.route}/$sessionId")
+            }
+            SessionHistoryScreen(toSessionOverviewScreen)
+        }
+        composable(
+            route = "${Screen.SessionOverviewScreen.route}/{sessionId}",
+            arguments = listOf(
+                navArgument("sessionId") { type = NavType.IntType }
+            )
+        ) {
+            val toSessionHistoryScreen = { navController.navigate(Screen.SessionHistoryScreen.route) }
+            val sessionId = it.arguments?.getInt("sessionId")
+            if (sessionId != null) SessionOverviewScreen(sessionId, toSessionHistoryScreen)
         }
         composable(route = Screen.SessionRecordScreen.route) {
             val toHomeScreen = { navController.navigate(Screen.HomeScreen.route) }
