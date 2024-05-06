@@ -9,7 +9,7 @@ import kotlinx.datetime.plus
 import utils.getCurrentDateTime
 
 
-class YearMonth(private val year: Int, private val month: Int) {
+class YearMonth(val year: Int, val month: Int) {
 
     fun incrementMonth(): YearMonth {
         return if (month == 12) {
@@ -54,7 +54,7 @@ class YearMonth(private val year: Int, private val month: Int) {
             return "$monthString $year"
         }
 
-    val timestamp: String
+    val dateString: String
         get() = "$year-${month.toString().padStart(2, '0')}"
 
     companion object {

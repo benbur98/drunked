@@ -5,7 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
@@ -16,9 +16,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -34,14 +31,19 @@ fun SessionCalendar(
     sessions: List<Session>,
     onSessionClicked: (Session) -> Unit = {},
 ) {
-    val orderedSessions by remember(sessions) { mutableStateOf(sessions.sortedBy { it.date }) }
-
     val viewModel: CalendarViewModel = viewModel()
     val state = viewModel.state.collectAsState()
 
     val yearMonth = state.value.yearMonth
     val dates = state.value.dates
     val daysOfWeek = DayOfWeek.entries.map { it.name.substring(0, 3) }.toTypedArray()
+
+    val sessionDates = sessions
+        .filter {
+            val sessionYearMonth = it.date.split("-")[0] + "-" + it.date.split("-")[1]
+            sessionYearMonth == yearMonth.dateString
+        }
+        .map { it.date.split("-")[2] }
 
     val onPreviousMonthButtonClicked = { prevMonth: YearMonth ->
         viewModel.toPreviousMonth(prevMonth)
@@ -50,13 +52,13 @@ fun SessionCalendar(
         viewModel.toNextMonth(nextMonth)
     }
     val onDateClicked = { date: CalendarViewModel.Companion.CalendarState.Date ->
-        val timestamp = viewModel.state.value.yearMonth.timestamp + "-" + date.dayPadded
+        val timestamp = viewModel.state.value.yearMonth.dateString + "-" + date.dayPadded
         val clickedSession = sessions.find { session -> session.date == timestamp }
         if (clickedSession != null) onSessionClicked(clickedSession)
     }
 
     Column(
-        modifier = Modifier.fillMaxSize().padding(16.dp)
+        modifier = Modifier.fillMaxWidth().padding(16.dp)
     ) {
         Row {
             repeat(daysOfWeek.size) {
@@ -71,7 +73,7 @@ fun SessionCalendar(
         )
         Content(
             dates = dates,
-            markedDates = orderedSessions.map { it.date.split("-")[2] },
+            markedDates = sessionDates,
             onDateClick = onDateClicked
         )
     }
@@ -127,7 +129,7 @@ fun Content(
             Row {
                 repeat(7) {
                     val date = if (index < dates.size) dates[index] else CalendarViewModel.Companion.CalendarState.Date.Empty
-                    ContentItem(date = date, marked = date.dayOfMonth in markedDates, onClick = onDateClick, modifier = Modifier.weight(1f))
+                    ContentItem(date = date, marked = date.dayPadded in markedDates, onClick = onDateClick, modifier = Modifier.weight(1f))
                     index++
                 }
             }
