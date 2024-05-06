@@ -23,23 +23,12 @@ class CalendarViewModel : ViewModel() {
         }
     }
 
-    fun toNextMonth(nextMonth: YearMonth) {
+    val toYearMonth = { yearMonth: YearMonth ->
         viewModelScope.launch {
             _state.update { currentState ->
                 currentState.copy(
-                    yearMonth = nextMonth,
-                    dates = nextMonth.getDates()
-                )
-            }
-        }
-    }
-
-    fun toPreviousMonth(prevMonth: YearMonth) {
-        viewModelScope.launch {
-            _state.update { currentState ->
-                currentState.copy(
-                    yearMonth = prevMonth,
-                    dates = prevMonth.getDates()
+                    yearMonth = yearMonth,
+                    dates = yearMonth.getDates()
                 )
             }
         }
@@ -63,7 +52,7 @@ class CalendarViewModel : ViewModel() {
             ) {
                 val dayPadded: String
                     get() = dayOfMonth.padStart(2, '0')
-                
+
                 companion object {
                     val Empty = Date("", false)
                 }

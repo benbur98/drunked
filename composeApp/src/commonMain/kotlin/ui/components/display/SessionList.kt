@@ -3,16 +3,17 @@ package ui.components.display
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -21,13 +22,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import data.drink.Session
 import kotlinx.coroutines.launch
 
 
 @Composable
 private fun MonthHeader(month: String) {
-    Text(month, modifier = Modifier.fillMaxWidth().background(color = MaterialTheme.colorScheme.surface))
+    Text(
+        month,
+        modifier = Modifier.fillMaxWidth().background(color = Color.LightGray)
+    )
 }
 
 
@@ -55,10 +62,8 @@ fun SessionList(sessions: List<Session>, onClick: (Session) -> Unit) {
             sessionMonths.forEach {
                 stickyHeader { MonthHeader(it) }
                 items(sessionMonthMap[it]!!) { (month, index) ->
-                    val session = orderedSessions[index]
-                    Box(modifier = Modifier.clickable { onClick(session) }) {
-                        SessionCard(session)
-                    }
+                    SessionItem(orderedSessions[index], onClick)
+                    HorizontalDivider()
                 }
             }
         }
@@ -77,5 +82,18 @@ fun SessionList(sessions: List<Session>, onClick: (Session) -> Unit) {
                 )
             }
         }
+    }
+}
+
+
+@Composable
+fun SessionItem(session: Session, onClick: (Session) -> Unit) {
+    val sessionTitle = "Session: ${session.date}"
+
+    Column(
+        modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp).clickable { onClick(session) },
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(sessionTitle, fontWeight = FontWeight.Bold)
     }
 }

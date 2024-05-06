@@ -31,8 +31,10 @@ fun NewDrinkForm(onDrinkAdded: (Drink) -> Unit) {
     var abv: Abv by remember { mutableStateOf(0f) }
     var drinkType: DrinkType? by remember { mutableStateOf(null) }
 
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Text("New Drink")
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.padding(bottom = 24.dp)
+    ) {
         Card(modifier = Modifier.padding(16.dp).border(2.dp, Color.Gray)) {
             Column(modifier = Modifier.fillMaxWidth()) {
                 TextField(

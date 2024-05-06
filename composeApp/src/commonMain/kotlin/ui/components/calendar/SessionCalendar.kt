@@ -45,11 +45,8 @@ fun SessionCalendar(
         }
         .map { it.date.split("-")[2] }
 
-    val onPreviousMonthButtonClicked = { prevMonth: YearMonth ->
-        viewModel.toPreviousMonth(prevMonth)
-    }
-    val onNextMonthButtonClicked = { nextMonth: YearMonth ->
-        viewModel.toNextMonth(nextMonth)
+    val toYearMonth: (YearMonth) -> Unit = {
+        viewModel.toYearMonth(it)
     }
     val onDateClicked = { date: CalendarViewModel.Companion.CalendarState.Date ->
         val timestamp = viewModel.state.value.yearMonth.dateString + "-" + date.dayPadded
@@ -57,8 +54,24 @@ fun SessionCalendar(
         if (clickedSession != null) onSessionClicked(clickedSession)
     }
 
+//    var offsetX by remember { mutableStateOf(0f) }
+
     Column(
         modifier = Modifier.fillMaxWidth().padding(16.dp)
+//            .pointerInput(Unit) {
+//                detectDragGestures { change, dragAmount ->
+//                    val original = offsetX
+//                    offsetX += dragAmount.x
+//                    change.consume()
+//                    if (original < offsetX) {
+//                        // Swiped to the right
+//                        toYearMonth(yearMonth.decrementMonth())
+//                    } else if (original > offsetX) {
+//                        // Swiped to the left
+//                        toYearMonth(yearMonth.incrementMonth())
+//                    }
+//                }
+//            }
     ) {
         Row {
             repeat(daysOfWeek.size) {
@@ -68,8 +81,7 @@ fun SessionCalendar(
         }
         Header(
             yearMonth = yearMonth,
-            onPreviousMonthButtonClicked = onPreviousMonthButtonClicked,
-            onNextMonthButtonClicked = onNextMonthButtonClicked
+            onMonthButtonClicked = toYearMonth
         )
         Content(
             dates = dates,
@@ -96,11 +108,10 @@ fun DayOfWeekItem(day: String, modifier: Modifier = Modifier) {
 @Composable
 fun Header(
     yearMonth: YearMonth,
-    onPreviousMonthButtonClicked: (YearMonth) -> Unit,
-    onNextMonthButtonClicked: (YearMonth) -> Unit,
+    onMonthButtonClicked: (YearMonth) -> Unit,
 ) {
     Row {
-        IconButton(onClick = { onPreviousMonthButtonClicked(yearMonth.decrementMonth()) }) {
+        IconButton(onClick = { onMonthButtonClicked(yearMonth.decrementMonth()) }) {
             Icon(Icons.AutoMirrored.Filled.KeyboardArrowLeft, "Left Arrow")
         }
         Text(
@@ -109,7 +120,7 @@ fun Header(
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.weight(1f).align(Alignment.CenterVertically)
         )
-        IconButton(onClick = { onNextMonthButtonClicked(yearMonth.incrementMonth()) }) {
+        IconButton(onClick = { onMonthButtonClicked(yearMonth.incrementMonth()) }) {
             Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, "Right Arrow")
         }
     }
@@ -128,14 +139,21 @@ fun Content(
             if (index >= dates.size) return@repeat
             Row {
                 repeat(7) {
-                    val date = if (index < dates.size) dates[index] else CalendarViewModel.Companion.CalendarState.Date.Empty
-                    ContentItem(date = date, marked = date.dayPadded in markedDates, onClick = onDateClick, modifier = Modifier.weight(1f))
+                    val date =
+                        if (index < dates.size) dates[index] else CalendarViewModel.Companion.CalendarState.Date.Empty
+                    ContentItem(
+                        date = date,
+                        marked = date.dayPadded in markedDates,
+                        onClick = onDateClick,
+                        modifier = Modifier.weight(1f)
+                    )
                     index++
                 }
             }
         }
     }
 }
+
 
 @Composable
 fun ContentItem(

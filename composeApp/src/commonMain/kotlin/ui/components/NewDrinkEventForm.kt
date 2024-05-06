@@ -31,7 +31,11 @@ import utils.volumeFromAbvAndUnits
 
 
 @Composable
-fun NewDrinkEventForm(drinks: List<Drink>, session: Session, onDrinkEventAdded: (DrinkEvent) -> Unit) {
+fun NewDrinkEventForm(
+    drinks: List<Drink>,
+    session: Session,
+    onDrinkEventAdded: (DrinkEvent) -> Unit
+) {
     var drink: Drink? by remember { mutableStateOf(null) }
     var volume: Volume by remember { mutableStateOf(0) }
     var units: Units by remember { mutableStateOf(0f) }
@@ -44,11 +48,12 @@ fun NewDrinkEventForm(drinks: List<Drink>, session: Session, onDrinkEventAdded: 
         drink?.run { units = unitsFromAbvAndVolume(this.abv, volume) }
     }
 
-    Card(
-        modifier = Modifier.padding(16.dp).border(2.dp, Color.Gray)
-    ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Column {
+    Card(modifier = Modifier.padding(16.dp).border(2.dp, Color.Gray)) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.padding(bottom = 0.dp)
+        ) {
+            Column(modifier = Modifier.fillMaxWidth()) {
                 DrinkSelect(drinks) { drink = it }
                 VolumeInput(volume) {
                     volume = it
@@ -77,9 +82,7 @@ fun NewDrinkEventForm(drinks: List<Drink>, session: Session, onDrinkEventAdded: 
                 },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RectangleShape
-            ) {
-                Text("Add DrinkEvent")
-            }
+            ) { Text("Add DrinkEvent") }
         }
     }
 }
