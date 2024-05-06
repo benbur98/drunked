@@ -26,22 +26,21 @@ fun DrinksScreen(database: DrunkedDatabase = koinInject()) {
 
     val drinks by drinkViewModel.drinks.collectAsState()
 
-    val sheetState = rememberModalBottomSheetState()
-    var showBottomSheet by remember { mutableStateOf(false) }
+    var showAddDrinkForm by remember { mutableStateOf(false) }
 
     Scaffold(
-        floatingActionButton = { DrinkFloatingButton { showBottomSheet = true } },
+        floatingActionButton = { DrinkFloatingButton { showAddDrinkForm = true } },
     ) {
         DrinkList(drinks)
 
-        if (showBottomSheet) {
+        if (showAddDrinkForm) {
             ModalBottomSheet(
-                onDismissRequest = { showBottomSheet = false },
-                sheetState = sheetState,
+                onDismissRequest = { showAddDrinkForm = false },
+                sheetState = rememberModalBottomSheetState(),
             ) {
                 NewDrinkForm {
                     drinkViewModel.addDrink(it)
-                    showBottomSheet = false
+                    showAddDrinkForm = false
                 }
             }
         }

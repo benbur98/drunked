@@ -3,6 +3,7 @@ package ui.components.display
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,7 +19,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import data.drink.Session
@@ -33,16 +33,16 @@ private fun MonthHeader(month: String) {
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun SessionList(sessions: List<Session>) {
+fun SessionList(sessions: List<Session>, onClick: (Session) -> Unit) {
     val orderedSessions: List<Session> by remember { mutableStateOf(sessions.sortedBy { it.date }) }
 
     // Map the Sessions to be Grouped by the Month and it's Index
-    var sessionMonthMap by remember {
+    val sessionMonthMap by remember {
         mutableStateOf(orderedSessions.mapIndexed { index, session ->
             session.datetime.month.name to index
         }.groupBy { it.first })
     }
-    var sessionMonths by remember { mutableStateOf(sessionMonthMap.keys) }
+    val sessionMonths by remember { mutableStateOf(sessionMonthMap.keys) }
 
     val listState = rememberLazyListState()
     val scope = rememberCoroutineScope()
@@ -55,7 +55,10 @@ fun SessionList(sessions: List<Session>) {
             sessionMonths.forEach {
                 stickyHeader { MonthHeader(it) }
                 items(sessionMonthMap[it]!!) { (month, index) ->
-                    SessionCard(orderedSessions[index])
+                    val session = orderedSessions[index]
+                    Box(modifier = Modifier.clickable { onClick(session) }) {
+                        SessionCard(session)
+                    }
                 }
             }
         }

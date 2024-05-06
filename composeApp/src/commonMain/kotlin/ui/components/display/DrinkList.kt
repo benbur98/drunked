@@ -102,7 +102,7 @@ fun DrinkList(drinks: List<Drink>) {
                 }
             }
 
-            Column(modifier = Modifier.width(20.dp).fillMaxHeight()) {
+            Column(modifier = Modifier.width(20.dp)) {
                 drinkLetters.forEach { letter ->
                     Text(
                         text = letter.toString(),
