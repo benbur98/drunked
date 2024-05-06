@@ -19,13 +19,13 @@ import androidx.compose.ui.unit.sp
 sealed class NavigationBarItem(var title: String, var selectedIcon: ImageVector, var unselectedIcon: ImageVector, var screen: Screen) {
     object Home : NavigationBarItem("Home", Icons.Filled.Home, Icons.Outlined.Home, Screen.HomeScreen)
     object Drinks : NavigationBarItem("Drinks", Icons.Filled.List, Icons.Outlined.List, Screen.DrinksScreen)
-    object Sessions : NavigationBarItem("Sessions", Icons.Filled.DateRange, Icons.Outlined.DateRange, Screen.SessionsScreen)
+    object SessionHistory : NavigationBarItem("Sessions", Icons.Filled.DateRange, Icons.Outlined.DateRange, Screen.SessionHistoryScreen)
 }
 
 
 @Composable
 fun NavigationBottomBar(currentScreen: Screen, navigateTo: (Screen) -> Unit) {
-    val navItems = listOf(NavigationBarItem.Sessions, NavigationBarItem.Home, NavigationBarItem.Drinks)
+    val navItems = listOf(NavigationBarItem.SessionHistory, NavigationBarItem.Home, NavigationBarItem.Drinks)
 
     NavigationBar {
         navItems.forEach { navItem ->

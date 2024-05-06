@@ -8,7 +8,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import ui.navigation.screens.DrinksScreen
 import ui.navigation.screens.HomeScreen
-import ui.navigation.screens.SessionScreen
+import ui.navigation.screens.SessionHistoryScreen
+import ui.navigation.screens.SessionRecordScreen
 
 
 @Composable
@@ -19,13 +20,18 @@ fun NavigationGraph(navController: NavHostController) {
         modifier = Modifier.fillMaxSize()
     ) {
         composable(route = Screen.HomeScreen.route) {
-            HomeScreen()
+            val toSessionRecordScreen = { navController.navigate(Screen.SessionRecordScreen.route) }
+            HomeScreen(toSessionRecordScreen)
         }
         composable(route = Screen.DrinksScreen.route) {
             DrinksScreen()
         }
-        composable(route = Screen.SessionsScreen.route) {
-            SessionScreen()
+        composable(route = Screen.SessionHistoryScreen.route) {
+            SessionHistoryScreen()
+        }
+        composable(route = Screen.SessionRecordScreen.route) {
+            val toHomeScreen = { navController.navigate(Screen.HomeScreen.route) }
+            SessionRecordScreen(toHomeScreen)
         }
     }
 }

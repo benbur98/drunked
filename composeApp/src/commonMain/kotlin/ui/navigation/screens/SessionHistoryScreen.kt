@@ -21,7 +21,7 @@ import ui.components.display.SessionList
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SessionScreen(database: DrunkedDatabase = koinInject()) {
+fun SessionHistoryScreen(database: DrunkedDatabase = koinInject()) {
     val pastSessions = SessionDataSource(database).getAllSessions()
     var session: Session? by remember { mutableStateOf(null) }
 

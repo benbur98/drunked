@@ -2,7 +2,7 @@ package ui.navigation
 
 
 enum class ScreenRoute {
-    HOME, DRINKS, SESSIONS;
+    HOME, DRINKS, SESSION_HISTORY, SESSION_RECORD;
 
     companion object {
         fun fromRoute(route: String?): ScreenRoute = enumValueOf(route?.uppercase() ?: HOME.name)
@@ -13,26 +13,15 @@ enum class ScreenRoute {
 sealed class Screen(val route: String) {
     object HomeScreen : Screen(ScreenRoute.HOME.name)
     object DrinksScreen : Screen(ScreenRoute.DRINKS.name)
-    object SessionsScreen : Screen(ScreenRoute.SESSIONS.name)
+    object SessionHistoryScreen : Screen(ScreenRoute.SESSION_HISTORY.name)
+    object SessionRecordScreen : Screen(ScreenRoute.SESSION_RECORD.name)
 
     companion object {
         fun fromRoute(route: String?): Screen = when (ScreenRoute.fromRoute(route)) {
             ScreenRoute.HOME -> HomeScreen
             ScreenRoute.DRINKS -> DrinksScreen
-            ScreenRoute.SESSIONS -> SessionsScreen
+            ScreenRoute.SESSION_HISTORY -> SessionHistoryScreen
+            ScreenRoute.SESSION_RECORD -> SessionRecordScreen
         }
     }
 }
-
-
-//fun NavController.navigateTo(screen: Screen) {
-//    this.navigate(screen.route) {
-//        this.graph.startDestinationRoute?.let {
-//            popUpTo(it) {
-//                saveState = true
-//            }
-//        }
-//        launchSingleTop = true
-//        restoreState = true
-//    }
-//}
