@@ -28,5 +28,8 @@ SELECT * FROM DrinkEvent WHERE session_id = ?;
 insert:
 INSERT INTO DrinkEvent(timestamp, volume, units, drink_id, session_id) VALUES (?, ?, ?, ?, ?);
 
+delete:
+DELETE FROM DrinkEvent WHERE id = ?;
+
 lastInsertId:
 SELECT last_insert_rowid();

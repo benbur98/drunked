@@ -45,9 +45,7 @@ fun NewDrinkEventForm(drinks: List<Drink>, session: Session, onDrinkEventAdded: 
     }
 
     Card(
-        modifier = Modifier
-            .padding(16.dp)
-            .border(2.dp, Color.Gray)
+        modifier = Modifier.padding(16.dp).border(2.dp, Color.Gray)
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Column {

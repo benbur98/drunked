@@ -39,9 +39,14 @@ class SessionRecordViewModel(database: DrunkedDatabase, sessionId: Int? = null) 
     val drinkEvents = _drinkEvents.asStateFlow()
 
     fun addDrinkEvent(drinkEvent: DrinkEvent) {
-        if (sessionOngoing) return
-        drinkEventDataSource.insertDrinkEvent(drinkEvent)
-        _drinkEvents.update { it + drinkEvent }
+        if (!sessionOngoing) return
+        _drinkEvents.update { it + drinkEventDataSource.insertAndReturnDrinkEvent(drinkEvent) }
+    }
+
+    fun deleteDrinkEvent(drinkEvent: DrinkEvent) {
+        if (!sessionOngoing) return
+        drinkEventDataSource.deleteDrinkEvent(drinkEvent)
+        _drinkEvents.update { it - drinkEvent }
     }
 
     private fun getSessionDrinkEvents() {

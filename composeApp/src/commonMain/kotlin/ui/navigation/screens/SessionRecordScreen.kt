@@ -12,6 +12,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.drunked.drunked.database.DrunkedDatabase
 import org.koin.compose.koinInject
 import ui.components.NewDrinkEventForm
+import ui.components.display.DrinkEventList
 
 
 @Composable
@@ -30,6 +31,10 @@ fun SessionRecordScreen(toHomeScreen: () -> Unit, database: DrunkedDatabase = ko
 
         NewDrinkEventForm(drinks, session!!) {
             sessionRecordViewModel.addDrinkEvent(it)
+        }
+
+        DrinkEventList(drinkEvents) {
+            sessionRecordViewModel.deleteDrinkEvent(it)
         }
 
         Button(onClick = { toHomeScreen() }) {

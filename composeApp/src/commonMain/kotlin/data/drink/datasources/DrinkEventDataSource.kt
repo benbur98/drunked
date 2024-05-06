@@ -41,6 +41,26 @@ class DrinkEventDataSource(private val database: DrunkedDatabase) {
         )
     }
 
+    fun insertAndReturnDrinkEvent(drinkEvent: DrinkEvent): DrinkEvent {
+        return drinkEventQueries.transactionWithResult {
+            drinkEventQueries.insert(
+                timestamp = drinkEvent.timestamp,
+                volume = drinkEvent.volume,
+                units = drinkEvent.units,
+                drink_id = drinkEvent.drink.id!!,
+                session_id = drinkEvent.session.id!!
+            )
+
+            val lastInsertId = drinkEventQueries.lastInsertId().executeAsOne()
+
+            drinkEventQueries.selectById(lastInsertId.toInt(), ::drinkEventMapper).executeAsOne()
+        }
+    }
+
+    fun deleteDrinkEvent(drinkEvent: DrinkEvent) {
+        drinkEventQueries.delete(drinkEvent.id!!)
+    }
+
     companion object {
         val drinkEventAdapter = com.drunked.drunked.database.DrinkEvent.Adapter(
             idAdapter = IntColumnAdapter,
