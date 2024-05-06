@@ -40,7 +40,7 @@ fun SessionList(sessions: List<Session>) {
     // Map the Sessions to be Grouped by the Month and it's Index
     var sessionMonthMap by remember {
         mutableStateOf(orderedSessions.mapIndexed { index, session ->
-            session.date to index
+            session.datetime.month.name to index
         }.groupBy { it.first })
     }
     var sessionMonths by remember { mutableStateOf(sessionMonthMap.keys.sorted()) }
