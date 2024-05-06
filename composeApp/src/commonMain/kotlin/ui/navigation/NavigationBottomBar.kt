@@ -4,21 +4,22 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.outlined.DateRange
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.List
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.sp
 
 
-sealed class NavigationBarItem(var title: String, var icon: ImageVector, var screen: Screen) {
-    object Home : NavigationBarItem("Home", Icons.Default.Home, Screen.HomeScreen)
-    object Drinks : NavigationBarItem("Drinks", Icons.Default.List, Screen.DrinksScreen)
-    object Sessions : NavigationBarItem("Sessions", Icons.Default.DateRange, Screen.SessionsScreen)
+sealed class NavigationBarItem(var title: String, var selectedIcon: ImageVector, var unselectedIcon: ImageVector, var screen: Screen) {
+    object Home : NavigationBarItem("Home", Icons.Filled.Home, Icons.Outlined.Home, Screen.HomeScreen)
+    object Drinks : NavigationBarItem("Drinks", Icons.Filled.List, Icons.Outlined.List, Screen.DrinksScreen)
+    object Sessions : NavigationBarItem("Sessions", Icons.Filled.DateRange, Icons.Outlined.DateRange, Screen.SessionsScreen)
 }
 
 
@@ -26,16 +27,17 @@ sealed class NavigationBarItem(var title: String, var icon: ImageVector, var scr
 fun NavigationBottomBar(currentScreen: Screen, navigateTo: (Screen) -> Unit) {
     val navItems = listOf(NavigationBarItem.Sessions, NavigationBarItem.Home, NavigationBarItem.Drinks)
 
-    NavigationBar(
-        containerColor = MaterialTheme.colorScheme.primaryContainer,
-        contentColor = Color.Black
-    ) {
+    NavigationBar {
         navItems.forEach { navItem ->
+            val selected = currentScreen == navItem.screen
             NavigationBarItem(
-                icon = { Icon(navItem.icon, contentDescription = navItem.title) },
+                icon = {
+                    if (selected) Icon(navItem.selectedIcon, contentDescription = navItem.title)
+                    else Icon(navItem.unselectedIcon, contentDescription = navItem.title)
+                },
                 label = { Text(text = navItem.title, fontSize = 9.sp) },
                 alwaysShowLabel = true,
-                selected = currentScreen == navItem.screen,
+                selected = selected,
                 onClick = { navigateTo(navItem.screen) }
             )
         }

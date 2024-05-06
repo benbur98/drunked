@@ -1,5 +1,6 @@
 package ui.navigation
 
+import DatabaseViewModel
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -14,20 +15,20 @@ import ui.navigation.screens.SessionScreen
 
 
 @Composable
-fun NavigationGraph(navController: NavHostController) {
+fun NavigationGraph(navController: NavHostController, databaseViewModel: DatabaseViewModel) {
     NavHost(
         navController = navController,
         startDestination = Screen.HomeScreen.route,
         modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState())
     ) {
         composable(route = Screen.HomeScreen.route) {
-            HomeScreen()
+            HomeScreen(databaseViewModel.database)
         }
         composable(route = Screen.DrinksScreen.route) {
-            DrinksScreen()
+            DrinksScreen(databaseViewModel.database)
         }
         composable(route = Screen.SessionsScreen.route) {
-            SessionScreen()
+            SessionScreen(databaseViewModel.database)
         }
     }
 }
