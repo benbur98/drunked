@@ -14,7 +14,7 @@ private fun LocalDateTime.formatDate() = toString().split("T").first()
 
 
 /* Return the Current DateTime in the System Default TimeZone */
-private fun getCurrentDateTime(): LocalDateTime {
+fun getCurrentDateTime(): LocalDateTime {
     val now = Clock.System.now()
     val timeZone = TimeZone.currentSystemDefault()
     return now.toLocalDateTime(timeZone)

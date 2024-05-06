@@ -34,7 +34,7 @@ private fun MonthHeader(month: String) {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SessionList(sessions: List<Session>) {
-    val orderedSessions: List<Session> by remember { mutableStateOf(sessions.sortedBy { it.datetime }) }
+    val orderedSessions: List<Session> by remember { mutableStateOf(sessions.sortedBy { it.date }) }
 
     // Map the Sessions to be Grouped by the Month and it's Index
     var sessionMonthMap by remember {
