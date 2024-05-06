@@ -1,5 +1,6 @@
-package data
+package di
 
+import data.initDatabase
 import org.koin.dsl.module
 
 

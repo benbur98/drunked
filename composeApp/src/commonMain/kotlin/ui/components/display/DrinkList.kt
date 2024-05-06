@@ -1,17 +1,13 @@
 package ui.components.display
 
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -33,15 +29,9 @@ import ui.components.select.SortType
 
 
 @Composable
-private fun LetterHeader(letter: Char) {
-    Text(letter.toString(), modifier = Modifier.fillMaxWidth().background(color = MaterialTheme.colorScheme.surface))
-}
-
-
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
 fun DrinkList(drinks: List<Drink>) {
     val orderedDrinks = drinks.sortedBy { it.name }
+
     var filteredDrinks by remember { mutableStateOf(orderedDrinks) }
 
     var searchQuery by remember { mutableStateOf("") }
@@ -101,7 +91,7 @@ fun DrinkList(drinks: List<Drink>) {
             filterDrinks()
         }
 
-        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxSize()) {
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxSize().weight(1f)) {
             LazyColumn(
                 state = listState,
                 modifier = Modifier.weight(1f).align(Alignment.Top)

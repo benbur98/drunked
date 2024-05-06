@@ -11,13 +11,14 @@ import com.drunked.drunked.database.DrunkedDatabase
 import data.drink.Session
 import data.drink.datasources.DrinkEventDataSource
 import data.drink.datasources.SessionDataSource
+import org.koin.compose.koinInject
 import ui.components.calendar.SessionCalendar
 import ui.components.display.SessionDetail
 import ui.components.display.SessionList
 
 
 @Composable
-fun SessionScreen(database: DrunkedDatabase) {
+fun SessionScreen(database: DrunkedDatabase = koinInject()) {
     val pastSessions = SessionDataSource(database).getAllSessions()
     var session: Session? by remember { mutableStateOf(null) }
 

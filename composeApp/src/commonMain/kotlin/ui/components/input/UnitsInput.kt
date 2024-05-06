@@ -20,6 +20,7 @@ fun UnitsInput(units: Units, onUnitsChange: (Units) -> Unit) {
         },
         label = { Text("Alcohol Units") },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
+        singleLine = true
     )
 }
