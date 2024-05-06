@@ -109,12 +109,6 @@ fun DrinkList(drinks: List<Drink>) {
                 items(filteredDrinks) { drink ->
                     DrinkCard(drink)
                 }
-//                drinkLetters.forEach {
-//                    stickyHeader { LetterHeader(it) }
-//                    items(drinkLetterMap[it]!!) { (drinkNameLetter, index) ->
-//                        DrinkCard(orderedDrinks[index])
-//                    }
-//                }
             }
 
             Column(modifier = Modifier.width(20.dp)) {

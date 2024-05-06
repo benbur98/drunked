@@ -20,14 +20,17 @@ class SessionViewModel(database: DrunkedDatabase) : ViewModel() {
         get() = _session.value != null
 
     fun startSession() {
+        if (sessionOngoing) return
         _session.update { sessionDataSource.insertAndReturnSession(Session()) }
     }
 
     fun resumeSession(id: Int) {
+        if (sessionOngoing) return
         _session.update { sessionDataSource.getSessionById(id) }
     }
 
     fun endSession() {
+        if (!sessionOngoing) return
         _session.update { null }
     }
 
@@ -35,6 +38,7 @@ class SessionViewModel(database: DrunkedDatabase) : ViewModel() {
     val drinkEvents = _drinkEvents.asStateFlow()
 
     fun addDrinkEvent(drinkEvent: DrinkEvent) {
+        if (sessionOngoing) return
         drinkEventDataSource.insertDrinkEvent(drinkEvent)
         _drinkEvents.update { it + drinkEvent }
     }
