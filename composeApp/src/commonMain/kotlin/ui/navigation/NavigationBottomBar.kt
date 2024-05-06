@@ -1,12 +1,12 @@
 package ui.navigation
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.List
+import androidx.compose.material.icons.automirrored.outlined.List
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.outlined.DateRange
 import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.List
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.sp
 
 sealed class NavigationBarItem(var title: String, var selectedIcon: ImageVector, var unselectedIcon: ImageVector, var screen: Screen) {
     object Home : NavigationBarItem("Home", Icons.Filled.Home, Icons.Outlined.Home, Screen.HomeScreen)
-    object Drinks : NavigationBarItem("Drinks", Icons.Filled.List, Icons.Outlined.List, Screen.DrinksScreen)
+    object Drinks : NavigationBarItem("Drinks", Icons.AutoMirrored.Filled.List, Icons.AutoMirrored.Outlined.List, Screen.DrinksScreen)
     object SessionHistory : NavigationBarItem("Sessions", Icons.Filled.DateRange, Icons.Outlined.DateRange, Screen.SessionHistoryScreen)
 }
 
