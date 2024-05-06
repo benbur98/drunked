@@ -1,5 +1,7 @@
 package ui.navigation
 
+import androidx.navigation.NavController
+
 
 enum class ScreenRoute {
     HOME, DRINKS, SESSIONS;
@@ -23,3 +25,21 @@ sealed class Screen(val route: String) {
         }
     }
 }
+
+
+fun NavController.getCurrentScreen(): Screen {
+    val navBackStackEntry = this.currentBackStackEntry
+    return Screen.fromRoute(navBackStackEntry?.destination?.route)
+}
+
+//fun NavController.navigateTo(screen: Screen) {
+//    this.navigate(screen.route) {
+//        this.graph.startDestinationRoute?.let {
+//            popUpTo(it) {
+//                saveState = true
+//            }
+//        }
+//        launchSingleTop = true
+//        restoreState = true
+//    }
+//}
