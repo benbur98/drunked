@@ -1,6 +1,5 @@
 package data.drink
 
-import kotlinx.datetime.DateTimePeriod
 import kotlinx.datetime.LocalDateTime
 import utils.currentDate
 import utils.currentTime
@@ -32,7 +31,15 @@ data class DrinkEvent(
     val session: Session,
     val timestamp: String = currentTime,
     val id: Int? = null
-)
+) {
+    val datetime: LocalDateTime
+        get() {
+            val (date, time) = timestamp.split(" ")
+            val (year, month, day) = date.split("-")
+            val (hour, minute, second) = time.split(":")
+            return LocalDateTime(year.toInt(), month.toInt(), day.toInt(), hour.toInt(), minute.toInt(), second.toInt())
+        }
+}
 
 
 data class Session(
@@ -40,5 +47,8 @@ data class Session(
     val id: Int? = null,
 ) {
     val datetime: LocalDateTime
-        get() = LocalDateTime.parse(date, DateTimePeriod("yyyy-MM-dd"))
+        get() {
+            val (year, month, day) = date.split("-")
+            return LocalDateTime(year.toInt(), month.toInt(), day.toInt(), 0, 0)
+        }
 }
