@@ -16,7 +16,7 @@ class SessionViewModel(database: DrunkedDatabase) : ViewModel() {
     private val _session = MutableStateFlow<Session?>(null)
     val session = _session.asStateFlow()
 
-    val sessionOngoing: Boolean
+    private val sessionOngoing: Boolean
         get() = _session.value != null
 
     fun startSession() {

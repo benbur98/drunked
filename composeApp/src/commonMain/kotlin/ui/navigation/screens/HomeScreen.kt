@@ -6,6 +6,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.drunked.drunked.database.DrunkedDatabase
 import org.koin.compose.koinInject
@@ -17,19 +20,15 @@ fun HomeScreen(database: DrunkedDatabase = koinInject()) {
     val drinkViewModel: DrinkViewModel = viewModel { DrinkViewModel(database) }
     val sessionViewModel: SessionViewModel = viewModel { SessionViewModel(database) }
 
-    Column {
-        Text("HOME")
+    val session by sessionViewModel.session.collectAsState()
 
-        Button(onClick = { sessionViewModel.startSession() }, enabled = !sessionViewModel.sessionOngoing) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Button(onClick = { sessionViewModel.startSession() }, enabled = session == null) {
             Text("Start Session")
         }
 
-        if (sessionViewModel.sessionOngoing) {
+        if (session != null) {
             SessionRecordingPage(drinkViewModel, sessionViewModel)
-
-            Button(onClick = { sessionViewModel.endSession() }) {
-                Text("End Session")
-            }
         }
     }
 }
