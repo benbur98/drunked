@@ -61,6 +61,9 @@ class CalendarViewModel : ViewModel() {
                 val dayOfMonth: String,
                 val isSelected: Boolean
             ) {
+                val dayPadded: String
+                    get() = dayOfMonth.padStart(2, '0')
+                
                 companion object {
                     val Empty = Date("", false)
                 }

@@ -50,7 +50,7 @@ fun SessionCalendar(
         viewModel.toNextMonth(nextMonth)
     }
     val onDateClicked = { date: CalendarViewModel.Companion.CalendarState.Date ->
-        val timestamp = viewModel.state.value.yearMonth.timestamp + "-" + date.dayOfMonth
+        val timestamp = viewModel.state.value.yearMonth.timestamp + "-" + date.dayPadded
         val clickedSession = sessions.find { session -> session.date == timestamp }
         if (clickedSession != null) onSessionClicked(clickedSession)
     }
@@ -71,6 +71,7 @@ fun SessionCalendar(
         )
         Content(
             dates = dates,
+            markedDates = orderedSessions.map { it.date.split("-")[2] },
             onDateClick = onDateClicked
         )
     }
@@ -116,6 +117,7 @@ fun Header(
 @Composable
 fun Content(
     dates: List<CalendarViewModel.Companion.CalendarState.Date>,
+    markedDates: List<String>,
     onDateClick: (CalendarViewModel.Companion.CalendarState.Date) -> Unit,
 ) {
     Column {
@@ -124,8 +126,8 @@ fun Content(
             if (index >= dates.size) return@repeat
             Row {
                 repeat(7) {
-                    val item = if (index < dates.size) dates[index] else CalendarViewModel.Companion.CalendarState.Date.Empty
-                    ContentItem(date = item, onClick = onDateClick, modifier = Modifier.weight(1f))
+                    val date = if (index < dates.size) dates[index] else CalendarViewModel.Companion.CalendarState.Date.Empty
+                    ContentItem(date = date, marked = date.dayOfMonth in markedDates, onClick = onDateClick, modifier = Modifier.weight(1f))
                     index++
                 }
             }
@@ -136,6 +138,7 @@ fun Content(
 @Composable
 fun ContentItem(
     date: CalendarViewModel.Companion.CalendarState.Date,
+    marked: Boolean,
     onClick: (CalendarViewModel.Companion.CalendarState.Date) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -144,6 +147,8 @@ fun ContentItem(
             .background(
                 color = if (date.isSelected) {
                     MaterialTheme.colorScheme.secondaryContainer
+                } else if (marked) {
+                    MaterialTheme.colorScheme.primaryContainer
                 } else {
                     Color.Transparent
                 }

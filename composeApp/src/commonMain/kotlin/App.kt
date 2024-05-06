@@ -49,7 +49,7 @@ fun App(appModule: AppModule) {
 //                DrinkList(drinks)
 
                 SessionCalendar(pastSessions) {
-                    println("Date clicked: $it")
+                    println("Session clicked: $it")
                 }
 
 //                if (session == null) {
