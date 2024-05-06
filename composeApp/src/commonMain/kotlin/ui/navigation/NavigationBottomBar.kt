@@ -1,13 +1,13 @@
 package ui.navigation
 
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
@@ -26,16 +26,14 @@ sealed class NavigationBarItem(var title: String, var icon: ImageVector, var scr
 fun NavigationBottomBar(currentScreen: Screen, navigateTo: (Screen) -> Unit) {
     val navItems = listOf(NavigationBarItem.Sessions, NavigationBarItem.Home, NavigationBarItem.Drinks)
 
-    BottomNavigation(
-        backgroundColor = MaterialTheme.colorScheme.primaryContainer,
+    NavigationBar(
+        containerColor = MaterialTheme.colorScheme.primaryContainer,
         contentColor = Color.Black
     ) {
         navItems.forEach { navItem ->
-            BottomNavigationItem(
+            NavigationBarItem(
                 icon = { Icon(navItem.icon, contentDescription = navItem.title) },
                 label = { Text(text = navItem.title, fontSize = 9.sp) },
-                selectedContentColor = Color.Black,
-                unselectedContentColor = Color.Black.copy(0.4f),
                 alwaysShowLabel = true,
                 selected = currentScreen == navItem.screen,
                 onClick = { navigateTo(navItem.screen) }
