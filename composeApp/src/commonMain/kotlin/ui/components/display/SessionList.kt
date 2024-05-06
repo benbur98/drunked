@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -21,7 +21,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import data.drink.Session
 import kotlinx.coroutines.launch
 
@@ -35,7 +34,7 @@ private fun MonthHeader(month: String) {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SessionList(sessions: List<Session>) {
-    val orderedSessions: List<Session> by remember { mutableStateOf(sessions.sortedBy { it.date }) }
+    val orderedSessions: List<Session> by remember { mutableStateOf(sessions.sortedBy { it.datetime }) }
 
     // Map the Sessions to be Grouped by the Month and it's Index
     var sessionMonthMap by remember {
@@ -43,7 +42,7 @@ fun SessionList(sessions: List<Session>) {
             session.datetime.month.name to index
         }.groupBy { it.first })
     }
-    var sessionMonths by remember { mutableStateOf(sessionMonthMap.keys.sorted()) }
+    var sessionMonths by remember { mutableStateOf(sessionMonthMap.keys) }
 
     val listState = rememberLazyListState()
     val scope = rememberCoroutineScope()
@@ -61,7 +60,7 @@ fun SessionList(sessions: List<Session>) {
             }
         }
 
-        Column(modifier = Modifier.width(20.dp)) {
+        Column(modifier = Modifier.wrapContentWidth()) {
             sessionMonths.forEach {
                 Text(
                     text = it,
@@ -71,7 +70,7 @@ fun SessionList(sessions: List<Session>) {
                                 listState.animateScrollToItem(index)
                             }
                         }
-                    }
+                    }.align(Alignment.End)
                 )
             }
         }
