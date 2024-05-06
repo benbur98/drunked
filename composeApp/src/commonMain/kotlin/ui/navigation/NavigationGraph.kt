@@ -1,8 +1,6 @@
 package ui.navigation
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -18,7 +16,7 @@ fun NavigationGraph(navController: NavHostController) {
     NavHost(
         navController = navController,
         startDestination = Screen.HomeScreen.route,
-        modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState())
+        modifier = Modifier.fillMaxSize()
     ) {
         composable(route = Screen.HomeScreen.route) {
             HomeScreen()

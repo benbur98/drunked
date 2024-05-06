@@ -1,11 +1,8 @@
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -34,15 +31,9 @@ fun App(appModule: AppModule) {
         Scaffold(
             topBar = { Logo() },
             bottomBar = { NavigationBottomBar(currentScreen, navigateTo) }
-        ) {
-            Surface {
-                Column(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.Top,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    NavigationGraph(navController)
-                }
+        ) { innerPadding ->
+            Surface(modifier = Modifier.padding(innerPadding)) {
+                NavigationGraph(navController)
             }
         }
     }

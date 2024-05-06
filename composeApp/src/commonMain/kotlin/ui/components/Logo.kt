@@ -16,12 +16,12 @@ import org.jetbrains.compose.resources.painterResource
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-fun Logo(modifier: Modifier = Modifier) {
+fun Logo() {
     Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
         Image(
             painter = painterResource(Res.drawable.drunked),
             contentDescription = "drunked Logo",
-            modifier = modifier.width(250.dp)
+            modifier = Modifier.width(250.dp)
         )
     }
 }

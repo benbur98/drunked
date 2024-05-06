@@ -3,6 +3,7 @@ package ui.components.display
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -91,17 +92,17 @@ fun DrinkList(drinks: List<Drink>) {
             filterDrinks()
         }
 
-        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxSize().weight(1f)) {
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxSize()) {
             LazyColumn(
                 state = listState,
-                modifier = Modifier.weight(1f).align(Alignment.Top)
+                modifier = Modifier.weight(1f).align(Alignment.Top).fillMaxHeight()
             ) {
                 items(filteredDrinks) { drink ->
                     DrinkCard(drink)
                 }
             }
 
-            Column(modifier = Modifier.width(20.dp)) {
+            Column(modifier = Modifier.width(20.dp).fillMaxHeight()) {
                 drinkLetters.forEach { letter ->
                     Text(
                         text = letter.toString(),
