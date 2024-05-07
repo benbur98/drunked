@@ -3,19 +3,24 @@ package ui.navigation.screens
 import DrinkViewModel
 import SessionRecordViewModel
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.drunked.drunked.database.DrunkedDatabase
 import org.koin.compose.koinInject
 import ui.components.NewDrinkEventForm
 import ui.components.display.DrinkEventList
+import ui.components.generic.OverviewCard
+import kotlin.math.roundToInt
 
 
 @Composable
@@ -39,8 +44,17 @@ fun SessionRecordScreen(toHomeScreen: () -> Unit, database: DrunkedDatabase = ko
             sessionRecordViewModel.addDrinkEvent(it)
         }
 
-        Text("Drink Count: ${drinkEvents.size}")
-        
+        Spacer(modifier = Modifier.height(20.dp))
+
+        OverviewCard(
+            listOf(
+                "Drinks" to drinkEvents.size.toString(),
+                "Units" to drinkEvents.sumOf { it.units.toDouble() }.roundToInt().toString()
+            )
+        )
+
+        Spacer(modifier = Modifier.height(20.dp))
+
         DrinkEventList(drinkEvents) {
             sessionRecordViewModel.deleteDrinkEvent(it)
         }

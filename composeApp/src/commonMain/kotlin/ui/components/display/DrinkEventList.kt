@@ -48,7 +48,7 @@ fun DrinkEventItem(drinkEvent: DrinkEvent) {
     val drinkEventTitle = "${drinkEvent.drink.name} [${drinkEvent.volume}]"
 
     Column(
-        modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+        modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp).padding(start = 10.dp),
         verticalArrangement = Arrangement.Center
     ) {
         Text(drinkEventTitle, fontWeight = FontWeight.Bold)

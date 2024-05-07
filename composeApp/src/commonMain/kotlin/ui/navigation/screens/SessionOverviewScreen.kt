@@ -18,6 +18,8 @@ import data.drink.datasources.DrinkEventDataSource
 import data.drink.datasources.SessionDataSource
 import org.koin.compose.koinInject
 import ui.components.display.DrinkEventList
+import ui.components.generic.OverviewCard
+import kotlin.math.roundToInt
 
 
 @Composable
@@ -38,10 +40,21 @@ fun SessionOverviewScreen(
         }
 
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(
+                "Session: ${session.date}",
+                style = MaterialTheme.typography.headlineMedium,
+            )
 
-            Text("Session: ${session.date}", style = MaterialTheme.typography.headlineMedium)
+            Spacer(modifier = Modifier.height(20.dp))
 
-            Spacer(modifier = Modifier.height(16.dp))
+            OverviewCard(
+                listOf(
+                    "Drinks" to drinkEvents.size.toString(),
+                    "Units" to drinkEvents.sumOf { it.units.toDouble() }.roundToInt().toString()
+                )
+            )
+
+            Spacer(modifier = Modifier.height(20.dp))
 
             DrinkEventList(drinkEvents)
         }

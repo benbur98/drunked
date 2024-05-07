@@ -91,7 +91,7 @@ fun SessionItem(session: Session, onClick: (Session) -> Unit) {
     val sessionTitle = "Session: ${session.date}"
 
     Column(
-        modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp).clickable { onClick(session) },
+        modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp).padding(start = 10.dp).clickable { onClick(session) },
         verticalArrangement = Arrangement.Center
     ) {
         Text(sessionTitle, fontWeight = FontWeight.Bold)

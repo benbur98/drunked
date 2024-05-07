@@ -134,7 +134,7 @@ fun DrinkItem(drink: Drink) {
     val drinkTitle = "${drink.name} [${drink.type.text}]"
 
     Column(
-        modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+        modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp).padding(start = 10.dp),
         verticalArrangement = Arrangement.Center
     ) {
         Text(drinkTitle, fontWeight = FontWeight.Bold)
