@@ -19,23 +19,21 @@ import data.drink.DrinkType
 
 @Composable
 fun DrinkTypeSelectChips(onSelect: (List<DrinkType>?) -> Unit) {
-    var selectedDrinkTypes: List<DrinkType>? by remember { mutableStateOf(null) }
+    var selectedDrinkTypes: Set<DrinkType> by remember { mutableStateOf(setOf()) }
 
     Row(modifier = Modifier.horizontalScroll(rememberScrollState())) {
         DrinkType.entries.forEach {
             FilterChip(
                 label = { Text(it.name) },
-                selected = it in selectedDrinkTypes.orEmpty(),
+                selected = it in selectedDrinkTypes,
                 onClick = {
-                    selectedDrinkTypes = if (it in selectedDrinkTypes.orEmpty()) {
-                        selectedDrinkTypes?.filter { listItem -> it != listItem }
-                    } else {
-                        selectedDrinkTypes.orEmpty() + it
-                    }
-                    onSelect(selectedDrinkTypes)
+                    selectedDrinkTypes = if (it in selectedDrinkTypes) selectedDrinkTypes - it
+                    else selectedDrinkTypes + it
+
+                    onSelect(selectedDrinkTypes.toList().ifEmpty { null })
                 },
                 trailingIcon = {
-                    if (it in selectedDrinkTypes.orEmpty()) Icon(Icons.Default.Close, "Close")
+                    if (it in selectedDrinkTypes) Icon(Icons.Default.Close, "Close")
                 }
             )
         }

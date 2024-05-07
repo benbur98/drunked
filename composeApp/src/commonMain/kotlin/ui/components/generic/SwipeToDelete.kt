@@ -8,7 +8,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.DismissDirection
 import androidx.compose.material.DismissState
 import androidx.compose.material.DismissValue
@@ -27,7 +26,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 
 
@@ -82,7 +80,7 @@ fun DeleteBackground(swipeDismissState: DismissState) {
     val color = if (swipeDismissState.dismissDirection == DismissDirection.EndToStart) Color.Red else Color.Transparent
 
     Box(
-        modifier = Modifier.fillMaxSize().padding(16.dp).background(color),
+        modifier = Modifier.fillMaxSize().background(color),
         contentAlignment = Alignment.CenterEnd
     ) {
         Icon(Icons.Default.Delete, contentDescription = "Delete", tint = Color.White)
