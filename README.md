@@ -2,6 +2,9 @@
 
 A simple app to track your drinking habits.
 
+<img src="assets/drink_form.png" width="200px">
+<img src="assets/session_recording_screen.png" width=200px>
+
 This is not intended to be used for anything other than mild interest in your drinking habits during a Drinking Session.
 
 ## Stack
