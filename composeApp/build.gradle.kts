@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.sqlDelight)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.room)
 }
 
 kotlin {
@@ -36,17 +38,19 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
             implementation(libs.kotlinx.datetime)
-            implementation(libs.sqlDelight.primitive.adapters)
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
             implementation(libs.lifecycle.viewmodel.compose)
             implementation(libs.navigation.compose)
+            implementation(libs.sqlDelight.primitive.adapters)
+            implementation(libs.room.runtime)
+            implementation(libs.sqlite.bundled)
         }
         androidMain.dependencies {
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
-            implementation(libs.sqlDelight.android.driver)
             implementation(libs.koin.android)
+            implementation(libs.sqlDelight.android.driver)
         }
         iosMain.dependencies {
             implementation(libs.sqlDelight.native.driver)
@@ -92,6 +96,7 @@ android {
 
 dependencies {
     implementation(libs.androidx.material3.android)
+    implementation(libs.androidx.room.ktx)
 }
 
 sqldelight {
@@ -100,4 +105,12 @@ sqldelight {
             packageName.set("com.drunked.drunked.database")
         }
     }
+}
+
+room {
+    schemaDirectory("$projectDir/schemas")
+}
+
+dependencies {
+    ksp(libs.room.compiler)
 }

@@ -21,6 +21,9 @@ lifecycleViewmodelCompose = "2.8.0-beta02"
 material3Android = "1.2.1"
 navigationCompose = "2.7.0-alpha03"
 sqlDelight = "2.0.1"
+room = "2.7.0-alpha01"
+ksp = "1.9.23-1.0.19"
+sqlite = "2.5.0-SNAPSHOT"
 
 [libraries]
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koinCore" }
@@ -45,6 +48,10 @@ navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-co
 sqlDelight-primitive-adapters = { module = "app.cash.sqldelight:primitive-adapters", version.ref = "sqlDelight" }
 sqlDelight-android-driver = { module = "app.cash.sqldelight:android-driver", version.ref = "sqlDelight" }
 sqlDelight-native-driver = { module = "app.cash.sqldelight:native-driver", version.ref = "sqlDelight" }
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+room-runtime-android = { module = "androidx.room:room-runtime-android", version.ref = "room" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -52,3 +59,5 @@ androidLibrary = { id = "com.android.library", version.ref = "agp" }
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 sqlDelight = { id = "app.cash.sqldelight", version.ref = "sqlDelight" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+room = { id = "androidx.room", version.ref = "room" }
